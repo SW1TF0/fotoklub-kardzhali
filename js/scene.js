@@ -9,8 +9,8 @@
 //
 // If the model fails to load (e.g. camera.glb hasn't been added to the repo
 // yet) a detailed stand-in camera built from primitives is used instead —
-// a hollow chassis with a lens, viewfinder hump, flash, and the mirror /
-// sensor / circuit board it normally hides inside — so the scroll-explode
+// a rounded-edge chassis with a lens, viewfinder hump, flash, and the mirror
+// / sensor / circuit board it normally hides inside — so the scroll-explode
 // effect (parts separating + the rig spinning) is fully visible without the
 // real asset.
 // ============================================================================
@@ -23,7 +23,7 @@ gsap.registerPlugin(ScrollTrigger);
 const canvas = document.getElementById("camera-canvas");
 
 const scene = new THREE.Scene();
-scene.fog = new THREE.FogExp2(0x081712, 0.05);
+scene.fog = new THREE.FogExp2(0x0a0a0a, 0.035);
 
 const camera = new THREE.PerspectiveCamera(
   40,
@@ -43,19 +43,19 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 
 // ---- Lighting --------------------------------------------------------------
-const keyLight = new THREE.DirectionalLight(0xfff3d6, 1.6);
+const keyLight = new THREE.DirectionalLight(0xf2f5ff, 2.1);
 keyLight.position.set(4, 5, 6);
 scene.add(keyLight);
 
-const rimLight = new THREE.DirectionalLight(0xa37e2c, 1.0);
+const rimLight = new THREE.DirectionalLight(0x3b82f6, 1.3);
 rimLight.position.set(-5, -2, -4);
 scene.add(rimLight);
 
-const fillLight = new THREE.DirectionalLight(0x2f6b52, 0.6);
+const fillLight = new THREE.DirectionalLight(0x8a95ad, 0.7);
 fillLight.position.set(-2, 3, -6);
 scene.add(fillLight);
 
-const ambient = new THREE.AmbientLight(0x20281f, 0.7);
+const ambient = new THREE.AmbientLight(0x3a3a42, 0.85);
 scene.add(ambient);
 
 // ---- Rig: everything hangs off this group so we can rotate/tilt as one ----
@@ -97,39 +97,39 @@ function buildFallbackCamera() {
   const group = new THREE.Group();
 
   const bodyMat = new THREE.MeshStandardMaterial({
-    color: 0x141414,
-    metalness: 0.75,
-    roughness: 0.32,
+    color: 0x1a1a1e,
+    metalness: 0.7,
+    roughness: 0.35,
   });
   const darkMat = new THREE.MeshStandardMaterial({
-    color: 0x0a0a0c,
+    color: 0x0c0c10,
     metalness: 0.5,
     roughness: 0.45,
   });
   const accentMat = new THREE.MeshStandardMaterial({
-    color: 0xa37e2c,
-    metalness: 0.9,
-    roughness: 0.2,
+    color: 0x3b82f6,
+    metalness: 0.5,
+    roughness: 0.3,
   });
   const glassMat = new THREE.MeshStandardMaterial({
-    color: 0x0a1a2e,
-    metalness: 0.3,
-    roughness: 0.05,
-    emissive: 0x0a2a4a,
-    emissiveIntensity: 0.2,
+    color: 0x0a1420,
+    metalness: 0.6,
+    roughness: 0.08,
+    emissive: 0x3b82f6,
+    emissiveIntensity: 0.1,
   });
   const mirrorMat = new THREE.MeshStandardMaterial({
-    color: 0xd8d8d8,
+    color: 0xd8d8dc,
     metalness: 1,
     roughness: 0.05,
   });
   const sensorMat = new THREE.MeshStandardMaterial({
-    color: 0x0b3d2e,
+    color: 0x35405a,
     metalness: 0.85,
     roughness: 0.25,
   });
   const pcbMat = new THREE.MeshStandardMaterial({
-    color: 0x0f3d24,
+    color: 0x1f2e22,
     metalness: 0.3,
     roughness: 0.6,
   });
@@ -144,94 +144,119 @@ function buildFallbackCamera() {
     roughness: 0.5,
   });
 
-  // ---- Body: a hollow chassis (4 panels, open front & back) so the parts
-  // normally hidden inside are visible through it once things separate. ----
+  const halfW = 1.5;
+  const halfH = 0.8;
+  const panelDepth = 1.8;
+
+  // ---- Body: a rounded-edge chassis (4 panels + corner posts, open front
+  // & back) so the parts normally hidden inside are visible once things
+  // separate. ----
   const body = new THREE.Group();
   body.name = "Body";
-  const panelDepth = 1.8;
-  const top = new THREE.Mesh(new THREE.BoxGeometry(3.0, 0.12, panelDepth), bodyMat);
-  top.position.set(0, 0.84, 0);
-  const bottom = new THREE.Mesh(new THREE.BoxGeometry(3.0, 0.12, panelDepth), bodyMat);
-  bottom.position.set(0, -0.84, 0);
-  const left = new THREE.Mesh(new THREE.BoxGeometry(0.12, 1.8, panelDepth), bodyMat);
-  left.position.set(-1.44, 0, 0);
-  const right = new THREE.Mesh(new THREE.BoxGeometry(0.12, 1.8, panelDepth), bodyMat);
-  right.position.set(1.44, 0, 0);
-  const grip = new THREE.Mesh(new THREE.BoxGeometry(0.32, 1.2, panelDepth), bodyMat);
-  grip.position.set(1.58, -0.1, 0);
-  body.add(top, bottom, left, right, grip);
+  const top = new THREE.Mesh(new THREE.BoxGeometry(halfW * 2, 0.22, panelDepth), bodyMat);
+  top.position.set(0, halfH, 0);
+  const bottom = new THREE.Mesh(new THREE.BoxGeometry(halfW * 2, 0.22, panelDepth), bodyMat);
+  bottom.position.set(0, -halfH, 0);
+  const left = new THREE.Mesh(new THREE.BoxGeometry(0.22, halfH * 2, panelDepth), bodyMat);
+  left.position.set(-halfW, 0, 0);
+  const right = new THREE.Mesh(new THREE.BoxGeometry(0.22, halfH * 2, panelDepth), bodyMat);
+  right.position.set(halfW, 0, 0);
+  body.add(top, bottom, left, right);
+
+  // Rounded corner posts close the gaps left by the panel frame so it reads
+  // as one solid, finished chassis rather than a flat skeleton.
+  const postGeo = new THREE.CylinderGeometry(0.11, 0.11, halfH * 2, 16);
+  [
+    [-halfW, panelDepth / 2],
+    [-halfW, -panelDepth / 2],
+    [halfW, panelDepth / 2],
+    [halfW, -panelDepth / 2],
+  ].forEach(([x, z]) => {
+    const post = new THREE.Mesh(postGeo, bodyMat);
+    post.position.set(x, 0, z);
+    body.add(post);
+  });
+
+  // Rounded grip on the right side.
+  const grip = new THREE.Mesh(new THREE.CapsuleGeometry(0.24, 0.9, 6, 16), bodyMat);
+  grip.position.set(halfW + 0.12, -0.05, 0);
+  body.add(grip);
+
   group.add(body);
 
-  // ---- Front plate + shutter button (moves forward as one unit) ----
+  // ---- Front plate + shutter button + lens-mount ring (moves forward as
+  // one unit) ----
   const frontPlate = new THREE.Group();
   frontPlate.name = "FrontPlate";
-  const frontPanel = new THREE.Mesh(new THREE.BoxGeometry(2.6, 1.6, 0.12), bodyMat);
+  const frontPanel = new THREE.Mesh(new THREE.BoxGeometry(halfW * 2 - 0.3, halfH * 2 - 0.15, 0.14), bodyMat);
+  const mountRing = new THREE.Mesh(new THREE.TorusGeometry(0.76, 0.035, 10, 40), accentMat);
+  mountRing.position.set(0, 0, 0.08);
   const shutterBtn = new THREE.Mesh(
     new THREE.CylinderGeometry(0.09, 0.09, 0.08, 16),
     accentMat
   );
   shutterBtn.position.set(1.0, 0.75, 0.1);
-  frontPlate.add(frontPanel, shutterBtn);
-  frontPlate.position.set(0, 0, 0.96);
+  frontPlate.add(frontPanel, mountRing, shutterBtn);
+  frontPlate.position.set(0, 0, panelDepth / 2 + 0.07);
   group.add(frontPlate);
 
-  // ---- Lens: barrel + front glass element (moves forward further) ----
+  // ---- Lens: stepped barrel + front glass element (moves forward further) ----
   const lens = new THREE.Group();
   lens.name = "Lens";
   const barrel = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.72, 0.78, 1.3, 32),
-    accentMat
-  );
-  barrel.rotation.x = Math.PI / 2;
-  const ring = new THREE.Mesh(
-    new THREE.TorusGeometry(0.72, 0.05, 12, 32),
+    new THREE.CylinderGeometry(0.72, 0.78, 1.1, 48),
     bodyMat
   );
-  ring.position.set(0, 0, -0.5);
-  const glass = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.6, 0.6, 0.06, 32),
-    glassMat
+  barrel.rotation.x = Math.PI / 2;
+  const barrelTip = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.64, 0.72, 0.35, 48),
+    bodyMat
   );
+  barrelTip.rotation.x = Math.PI / 2;
+  barrelTip.position.set(0, 0, 0.68);
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(0.72, 0.045, 12, 40), accentMat);
+  ring.position.set(0, 0, -0.4);
+  const glass = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.55, 0.06, 48), glassMat);
   glass.rotation.x = Math.PI / 2;
-  glass.position.set(0, 0, 0.68);
-  lens.add(barrel, ring, glass);
-  lens.position.set(0, 0, 1.6);
+  glass.position.set(0, 0, 0.86);
+  lens.add(barrel, barrelTip, ring, glass);
+  lens.position.set(0, 0, panelDepth / 2 + 0.9);
   group.add(lens);
 
   // ---- Viewfinder hump on top ----
-  const viewfinder = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.45, 0.9), bodyMat);
+  const viewfinder = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.4, 0.9), bodyMat);
   viewfinder.name = "Viewfinder";
-  viewfinder.position.set(0, 1.07, 0.05);
+  viewfinder.position.set(0, halfH + 0.2, 0.05);
   group.add(viewfinder);
 
   // ---- Pop-up flash ----
-  const flash = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.3, 0.55), flashMat);
+  const flash = new THREE.Mesh(new THREE.BoxGeometry(0.68, 0.28, 0.55), flashMat);
   flash.name = "Flash";
-  flash.position.set(0, 1.35, 0.1);
+  flash.position.set(0, halfH + 0.48, 0.1);
   group.add(flash);
 
   // ---- Mirror (the part a DSLR normally hides) ----
-  const mirror = new THREE.Mesh(new THREE.BoxGeometry(1.5, 1.0, 0.05), mirrorMat);
+  const mirror = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.95, 0.05), mirrorMat);
   mirror.name = "Mirror";
   mirror.rotation.x = Math.PI / 4;
-  mirror.position.set(0, 0, 0.35);
+  mirror.position.set(0, 0, 0.3);
   group.add(mirror);
 
   // ---- Sensor plate ----
-  const sensor = new THREE.Mesh(new THREE.BoxGeometry(1.8, 1.2, 0.08), sensorMat);
+  const sensor = new THREE.Mesh(new THREE.BoxGeometry(1.7, 1.1, 0.08), sensorMat);
   sensor.name = "Sensor";
-  sensor.position.set(0, 0, -0.5);
+  sensor.position.set(0, 0, -0.45);
   group.add(sensor);
 
   // ---- Circuit board + a few component "chips" ----
   const circuitBoard = new THREE.Group();
   circuitBoard.name = "CircuitBoard";
-  const boardPlate = new THREE.Mesh(new THREE.BoxGeometry(2.0, 1.3, 0.06), pcbMat);
+  const boardPlate = new THREE.Mesh(new THREE.BoxGeometry(1.9, 1.2, 0.06), pcbMat);
   circuitBoard.add(boardPlate);
   const chipPositions = [
-    [-0.6, 0.3, 0.06],
-    [0.5, 0.2, 0.06],
-    [-0.2, -0.35, 0.06],
+    [-0.55, 0.28, 0.06],
+    [0.45, 0.18, 0.06],
+    [-0.2, -0.32, 0.06],
   ];
   chipPositions.forEach(([x, y, z], i) => {
     const chip = new THREE.Mesh(
@@ -241,13 +266,13 @@ function buildFallbackCamera() {
     chip.position.set(x, y, z);
     circuitBoard.add(chip);
   });
-  circuitBoard.position.set(0, 0, -0.86);
+  circuitBoard.position.set(0, 0, -0.78);
   group.add(circuitBoard);
 
   // ---- Back plate (LCD side) ----
-  const backPlate = new THREE.Mesh(new THREE.BoxGeometry(2.6, 1.6, 0.12), darkMat);
+  const backPlate = new THREE.Mesh(new THREE.BoxGeometry(halfW * 2 - 0.3, halfH * 2 - 0.15, 0.14), darkMat);
   backPlate.name = "BackPlate";
-  backPlate.position.set(0, 0, -0.96);
+  backPlate.position.set(0, 0, -(panelDepth / 2 + 0.07));
   group.add(backPlate);
 
   group.children.forEach((child) => registerPart(child, child.name));
@@ -258,7 +283,7 @@ function buildFallbackCamera() {
 const loader = new GLTFLoader();
 
 function mountModel(root) {
-  root.scale.setScalar(1.05);
+  root.scale.setScalar(1.15);
   rig.add(root);
 }
 

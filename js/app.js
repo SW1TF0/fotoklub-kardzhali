@@ -57,10 +57,10 @@ function renderAuthArea(user) {
   if (user) {
     const isAdmin = ADMIN_EMAILS.includes(user.email);
     authArea.innerHTML = `
-      <span class="hidden text-xs uppercase tracking-wider text-neutral-400 sm:inline">${
+      <span class="hidden sm:inline text-sm text-neutral-300">${
         user.displayName || user.email
       }</span>
-      <button id="logout-btn" class="btn-luxury btn-luxury-outline">Изход</button>
+      <button id="logout-btn" class="rounded-full border border-neutral-700 px-4 py-1.5 text-sm hover:border-accent-400 hover:text-accent-400 transition">Изход</button>
     `;
     document
       .getElementById("logout-btn")
@@ -70,7 +70,7 @@ function renderAuthArea(user) {
     adminLinkWrapMobile?.classList.toggle("hidden", !isAdmin);
   } else {
     authArea.innerHTML = `
-      <a href="#auth" class="btn-luxury btn-luxury-filled">Вход / Регистрация</a>
+      <a href="#auth" class="rounded-full bg-accent-400 px-4 py-1.5 text-sm font-medium text-neutral-950 hover:bg-accent-300 transition">Вход / Регистрация</a>
     `;
     adminLinkWrap?.classList.add("hidden");
     adminLinkWrapMobile?.classList.add("hidden");
@@ -103,12 +103,12 @@ function showTab(which) {
   const loginActive = which === "login";
   formLogin.classList.toggle("hidden", !loginActive);
   formRegister.classList.toggle("hidden", loginActive);
-  tabLogin.classList.toggle("text-amber-400", loginActive);
-  tabLogin.classList.toggle("border-amber-400", loginActive);
+  tabLogin.classList.toggle("text-accent-400", loginActive);
+  tabLogin.classList.toggle("border-accent-400", loginActive);
   tabLogin.classList.toggle("border-transparent", !loginActive);
   tabLogin.classList.toggle("text-neutral-500", !loginActive);
-  tabRegister.classList.toggle("text-amber-400", !loginActive);
-  tabRegister.classList.toggle("border-amber-400", !loginActive);
+  tabRegister.classList.toggle("text-accent-400", !loginActive);
+  tabRegister.classList.toggle("border-accent-400", !loginActive);
   tabRegister.classList.toggle("border-transparent", loginActive);
   tabRegister.classList.toggle("text-neutral-500", loginActive);
 }
@@ -200,13 +200,11 @@ if (galleryGrid) {
         .map((d) => {
           const p = d.data();
           return `
-            <figure class="group mb-5 break-inside-avoid border border-neutral-800 bg-neutral-950 transition-colors duration-500 hover:border-amber-400/60">
-              <div class="overflow-hidden">
-                <img src="${escapeHtml(p.url)}" alt="${escapeHtml(p.title || "Снимка от клуба")}" loading="lazy" class="w-full object-cover grayscale-[15%] transition duration-700 group-hover:scale-105 group-hover:grayscale-0" />
-              </div>
+            <figure class="mb-4 break-inside-avoid overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900">
+              <img src="${escapeHtml(p.url)}" alt="${escapeHtml(p.title || "Снимка от клуба")}" loading="lazy" class="w-full object-cover transition duration-500 hover:scale-105" />
               ${
                 p.title
-                  ? `<figcaption class="border-t border-neutral-800 px-4 py-3 font-serif text-sm italic text-neutral-400">${escapeHtml(p.title)}</figcaption>`
+                  ? `<figcaption class="px-3 py-2 text-sm text-neutral-400">${escapeHtml(p.title)}</figcaption>`
                   : ""
               }
             </figure>`;
@@ -224,8 +222,8 @@ function placeholderGallery() {
   return seeds
     .map(
       (n) => `
-      <figure class="mb-5 break-inside-avoid border border-neutral-800 bg-neutral-950">
-        <div class="flex aspect-[${n % 2 === 0 ? "3/4" : "4/3"}] items-center justify-center bg-gradient-to-br from-neutral-900 to-neutral-950 text-xs uppercase tracking-widest text-neutral-600">
+      <figure class="mb-4 break-inside-avoid overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900">
+        <div class="flex aspect-[${n % 2 === 0 ? "3/4" : "4/3"}] items-center justify-center bg-gradient-to-br from-neutral-800 to-neutral-900 text-neutral-600 text-sm">
           Снимка ${n} (демо)
         </div>
       </figure>`
@@ -256,33 +254,31 @@ if (feedEl) {
   function renderFeedCard(item) {
     const badge =
       item.type === "story"
-        ? `<span class="text-xs font-medium uppercase tracking-[0.2em] text-amber-400">История</span>`
-        : `<span class="text-xs font-medium uppercase tracking-[0.2em] text-neutral-400">Новина</span>`;
+        ? `<span class="rounded-full bg-accent-400/10 px-3 py-1 text-xs font-medium text-accent-400">История</span>`
+        : `<span class="rounded-full bg-neutral-700/40 px-3 py-1 text-xs font-medium text-neutral-300">Новина</span>`;
     const date = item.createdAt?.toDate
       ? item.createdAt.toDate().toLocaleDateString("bg-BG")
       : "";
     return `
-      <article class="border-t-2 border-amber-400 bg-neutral-950/40 p-8">
-        <div class="mb-4 flex items-center gap-3">
+      <article class="rounded-2xl border border-neutral-800 bg-neutral-900/60 p-6">
+        <div class="mb-3 flex items-center gap-3">
           ${badge}
-          <span class="text-xs text-neutral-600">&middot;</span>
           <span class="text-xs text-neutral-500">${date}</span>
         </div>
-        <h3 class="mb-3 font-serif text-xl text-neutral-100">${escapeHtml(item.title || "")}</h3>
-        <p class="font-light leading-relaxed tracking-wide text-neutral-400">${escapeHtml(item.content || "")}</p>
+        <h3 class="mb-2 text-lg font-semibold text-neutral-100">${escapeHtml(item.title || "")}</h3>
+        <p class="text-sm leading-relaxed text-neutral-400">${escapeHtml(item.content || "")}</p>
       </article>`;
   }
 
   function placeholderFeed() {
     return `
-      <article class="border-t-2 border-amber-400 bg-neutral-950/40 p-8">
-        <div class="mb-4 flex items-center gap-3">
-          <span class="text-xs font-medium uppercase tracking-[0.2em] text-neutral-400">Новина</span>
-          <span class="text-xs text-neutral-600">&middot;</span>
+      <article class="rounded-2xl border border-neutral-800 bg-neutral-900/60 p-6">
+        <div class="mb-3 flex items-center gap-3">
+          <span class="rounded-full bg-neutral-700/40 px-3 py-1 text-xs font-medium text-neutral-300">Новина</span>
           <span class="text-xs text-neutral-500">Скоро</span>
         </div>
-        <h3 class="mb-3 font-serif text-xl text-neutral-100">Новините на клуба ще се появят тук</h3>
-        <p class="font-light leading-relaxed tracking-wide text-neutral-400">Съдържанието се добавя от администраторския панел и ще се показва автоматично.</p>
+        <h3 class="mb-2 text-lg font-semibold text-neutral-100">Новините на клуба ще се появят тук</h3>
+        <p class="text-sm leading-relaxed text-neutral-400">Съдържанието се добавя от администраторския панел и ще се показва автоматично.</p>
       </article>`;
   }
 

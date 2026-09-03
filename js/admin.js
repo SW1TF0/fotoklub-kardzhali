@@ -86,8 +86,8 @@ navButtons.forEach((btn) => {
     const target = btn.getAttribute("data-panel-target");
     panels.forEach((p) => p.classList.toggle("hidden", p.dataset.panel !== target));
     navButtons.forEach((b) => {
-      b.classList.toggle("bg-amber-400/10", b === btn);
-      b.classList.toggle("text-amber-400", b === btn);
+      b.classList.toggle("bg-accent-400/10", b === btn);
+      b.classList.toggle("text-accent-400", b === btn);
       b.classList.toggle("text-neutral-400", b !== btn);
     });
     document.getElementById("admin-sidebar")?.classList.add("hidden", "md:block");
@@ -129,13 +129,13 @@ function initPhotosModule() {
       .map((d) => {
         const p = d.data();
         return `
-        <div class="flex items-center gap-4 border border-neutral-800 bg-neutral-950/40 p-3">
-          <img src="${p.url}" alt="" class="h-16 w-16 object-cover" />
+        <div class="flex items-center gap-4 rounded-xl border border-neutral-800 bg-neutral-900 p-3">
+          <img src="${p.url}" alt="" class="h-16 w-16 rounded-lg object-cover" />
           <div class="flex-1 min-w-0">
-            <p class="truncate font-serif text-sm text-neutral-200">${escapeHtml(p.title || "(без заглавие)")}</p>
+            <p class="truncate text-sm font-medium text-neutral-200">${escapeHtml(p.title || "(без заглавие)")}</p>
           </div>
-          <button data-edit="${d.id}" class="border border-neutral-700 px-3 py-1.5 text-xs uppercase tracking-wider hover:border-amber-400 hover:text-amber-400">Редакция</button>
-          <button data-delete="${d.id}" class="border border-red-900 px-3 py-1.5 text-xs uppercase tracking-wider text-red-400 hover:bg-red-950">Изтрий</button>
+          <button data-edit="${d.id}" class="rounded-lg border border-neutral-700 px-3 py-1.5 text-xs hover:border-accent-400 hover:text-accent-400">Редакция</button>
+          <button data-delete="${d.id}" class="rounded-lg border border-red-900 px-3 py-1.5 text-xs text-red-400 hover:bg-red-950">Изтрий</button>
         </div>`;
       })
       .join("");
@@ -276,18 +276,18 @@ function initSimpleContentModule({
           ? item.createdAt.toDate().toLocaleDateString("bg-BG")
           : "";
         return `
-        <div class="border border-neutral-800 bg-neutral-950/40 p-5">
-          <div class="mb-3 flex items-start justify-between gap-3">
+        <div class="rounded-xl border border-neutral-800 bg-neutral-900 p-4">
+          <div class="mb-2 flex items-start justify-between gap-3">
             <div>
-              <p class="font-serif text-base text-neutral-200">${escapeHtml(item.title || "")}</p>
-              <p class="mt-1 text-xs text-neutral-500">${date}</p>
+              <p class="font-medium text-neutral-200">${escapeHtml(item.title || "")}</p>
+              <p class="text-xs text-neutral-500">${date}</p>
             </div>
             <div class="flex shrink-0 gap-2">
-              <button data-edit="${d.id}" class="border border-neutral-700 px-3 py-1.5 text-xs uppercase tracking-wider hover:border-amber-400 hover:text-amber-400">Редакция</button>
-              <button data-delete="${d.id}" class="border border-red-900 px-3 py-1.5 text-xs uppercase tracking-wider text-red-400 hover:bg-red-950">Изтрий</button>
+              <button data-edit="${d.id}" class="rounded-lg border border-neutral-700 px-3 py-1.5 text-xs hover:border-accent-400 hover:text-accent-400">Редакция</button>
+              <button data-delete="${d.id}" class="rounded-lg border border-red-900 px-3 py-1.5 text-xs text-red-400 hover:bg-red-950">Изтрий</button>
             </div>
           </div>
-          <p class="text-sm font-light text-neutral-400">${escapeHtml(item.content || "")}</p>
+          <p class="text-sm text-neutral-400">${escapeHtml(item.content || "")}</p>
         </div>`;
       })
       .join("");
@@ -367,10 +367,10 @@ function initUsersModule() {
     listEl.innerHTML = `
       <table class="w-full text-left text-sm">
         <thead>
-          <tr class="border-b border-amber-400/20 text-neutral-500">
-            <th class="py-2 pr-4 text-xs font-medium uppercase tracking-wider">Име</th>
-            <th class="py-2 pr-4 text-xs font-medium uppercase tracking-wider">Имейл</th>
-            <th class="py-2 pr-4 text-xs font-medium uppercase tracking-wider">Регистриран на</th>
+          <tr class="border-b border-neutral-800 text-neutral-500">
+            <th class="py-2 pr-4 font-medium">Име</th>
+            <th class="py-2 pr-4 font-medium">Имейл</th>
+            <th class="py-2 pr-4 font-medium">Регистриран на</th>
           </tr>
         </thead>
         <tbody>
