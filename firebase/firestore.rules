@@ -1,0 +1,69 @@
+rules_version = '2';
+
+// ============================================================================
+// Firestore security rules — Фото Клуб Кърджали
+// ----------------------------------------------------------------------------
+// Collections:
+//   photos   { title, url, storagePath, createdAt }   — public gallery
+//   news     { title, content, createdAt }            — public news feed
+//   stories  { title, content, createdAt }            — public stories feed
+//   users    { uid, name, email, createdAt }           — one doc per registered
+//                                                        member, doc id = uid
+//
+// Admin check supports EITHER strategy described in js/firebase-config.js:
+//   1) email allowlist (isAdminEmail) — simplest, matches ADMIN_EMAILS in code
+//   2) custom claim `admin: true` set via the Admin SDK / a Cloud Function
+//      (isAdminClaim) — recommended for production
+// A write is allowed if the caller satisfies EITHER check.
+// ============================================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdminClaim() {
+      return isSignedIn() && request.auth.token.admin == true;
+    }
+
+    function isAdminEmail() {
+      // Keep this list in sync with ADMIN_EMAILS in js/firebase-config.js
+      return isSignedIn() && request.auth.token.email in [
+        "admin@fotoklub-kardzhali.bg"
+      ];
+    }
+
+    function isAdmin() {
+      return isAdminClaim() || isAdminEmail();
+    }
+
+    // Public content: anyone can read, only admins can write.
+    match /photos/{photoId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /news/{newsId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /stories/{storyId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Users: a member can create/read/update only their own profile doc
+    // (created at registration, doc id === auth uid). Admins can read all
+    // (needed for the "Регистрации" module) but never write another
+    // member's document.
+    match /users/{userId} {
+      allow create: if isSignedIn() && request.auth.uid == userId;
+      allow read: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      allow update: if isSignedIn() && request.auth.uid == userId;
+      allow delete: if isAdmin();
+    }
+  }
+}

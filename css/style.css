@@ -1,0 +1,74 @@
+/* ============================================================================
+   style.css — small custom layer on top of Tailwind (loaded via CDN in the
+   HTML files). Keep this file for things Tailwind utility classes can't do
+   cleanly: the fixed 3D canvas, masonry columns, custom scrollbar, fonts.
+   ============================================================================ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  background-color: #0a0a0a;
+}
+
+/* Fixed full-viewport canvas behind all content */
+#camera-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Every real content section sits above the canvas */
+.content-layer {
+  position: relative;
+  z-index: 10;
+}
+
+/* Masonry-style gallery using CSS columns */
+.masonry {
+  column-count: 1;
+  column-gap: 1rem;
+}
+@media (min-width: 640px) {
+  .masonry {
+    column-count: 2;
+  }
+}
+@media (min-width: 1024px) {
+  .masonry {
+    column-count: 3;
+  }
+}
+
+/* Subtle glass effect for the sticky header */
+.glass-header {
+  background: rgba(10, 10, 10, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #3f3f46;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d6a94a;
+}
+
+/* Fade-in-up utility for GSAP/scroll reveal targets */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+}

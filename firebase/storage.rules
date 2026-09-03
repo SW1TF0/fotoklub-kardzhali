@@ -1,0 +1,40 @@
+rules_version = '2';
+
+// ============================================================================
+// Firebase Storage security rules — Фото Клуб Кърджали
+// ----------------------------------------------------------------------------
+// Layout: photos/<timestamp>_<filename> — uploaded by the admin panel
+// (js/admin.js) for the public gallery.
+// ============================================================================
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdminClaim() {
+      return isSignedIn() && request.auth.token.admin == true;
+    }
+
+    function isAdminEmail() {
+      // Keep this list in sync with ADMIN_EMAILS in js/firebase-config.js
+      return isSignedIn() && request.auth.token.email in [
+        "admin@fotoklub-kardzhali.bg"
+      ];
+    }
+
+    function isAdmin() {
+      return isAdminClaim() || isAdminEmail();
+    }
+
+    match /photos/{fileName} {
+      allow read: if true;
+      allow write: if isAdmin()
+                   && request.resource.size < 15 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*');
+      allow delete: if isAdmin();
+    }
+  }
+}
