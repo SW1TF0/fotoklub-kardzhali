@@ -44,11 +44,11 @@ const keyLight = new THREE.DirectionalLight(0xfff3d6, 1.4);
 keyLight.position.set(4, 5, 6);
 scene.add(keyLight);
 
-const rimLight = new THREE.DirectionalLight(0xd6a94a, 0.9);
+const rimLight = new THREE.DirectionalLight(0xa37e2c, 0.9);
 rimLight.position.set(-5, -2, -4);
 scene.add(rimLight);
 
-const ambient = new THREE.AmbientLight(0x404050, 0.7);
+const ambient = new THREE.AmbientLight(0x2a2620, 0.7);
 scene.add(ambient);
 
 // ---- Rig: everything hangs off this group so we can rotate/tilt as one ----
@@ -83,14 +83,14 @@ function registerPart(mesh, name) {
 function buildFallbackCamera() {
   const group = new THREE.Group();
   const bodyMat = new THREE.MeshStandardMaterial({
-    color: 0x1c1c1e,
-    metalness: 0.6,
-    roughness: 0.35,
+    color: 0x121212,
+    metalness: 0.75,
+    roughness: 0.3,
   });
   const accentMat = new THREE.MeshStandardMaterial({
-    color: 0xd6a94a,
-    metalness: 0.8,
-    roughness: 0.25,
+    color: 0xa37e2c,
+    metalness: 0.9,
+    roughness: 0.2,
   });
 
   const body = new THREE.Mesh(
@@ -112,9 +112,9 @@ function buildFallbackCamera() {
   const sensor = new THREE.Mesh(
     new THREE.BoxGeometry(2.6, 1.6, 0.15),
     new THREE.MeshStandardMaterial({
-      color: 0x2f6fed,
-      metalness: 0.9,
-      roughness: 0.2,
+      color: 0x0b3d2e,
+      metalness: 0.85,
+      roughness: 0.25,
     })
   );
   sensor.position.set(0, 0, -0.7);
