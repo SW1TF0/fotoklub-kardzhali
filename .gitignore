@@ -6,3 +6,4 @@ node_modules/
 .env.local
 .vscode/
 .claude/settings.local.json
+.claude/scheduled_tasks.lock

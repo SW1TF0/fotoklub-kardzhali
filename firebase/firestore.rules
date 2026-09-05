@@ -31,7 +31,7 @@ service cloud.firestore {
     function isAdminEmail() {
       // Keep this list in sync with ADMIN_EMAILS in js/firebase-config.js
       return isSignedIn() && request.auth.token.email in [
-        "admin@fotoklub-kardzhali.bg"
+        "krasimiruzun@smartmenukj.com"
       ];
     }
 

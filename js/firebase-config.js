@@ -40,7 +40,7 @@ const firebaseConfig = {
 // The Firestore/Storage rules below already support BOTH strategies.
 // ----------------------------------------------------------------------------
 export const ADMIN_EMAILS = [
-  "admin@fotoklub-kardzhali.bg",
+  "krasimiruzun@smartmenukj.com",
 ];
 
 export const app = initializeApp(firebaseConfig);
