@@ -14,17 +14,32 @@
 ## Структура на проекта
 
 ```
-index.html               Публичен сайт (начало, за нас, галерия, новини, вход)
+index.html                Начало (hero, за нас, преглед на галерия/новини, вход)
+gallery.html              Пълна галерия — пагинация + lightbox преглед
+news.html                 Пълен фийд Новини и Истории — филтър по тип
+contact.html              Контакти — форма (записва в Firestore) + карта
+privacy.html              Политика за поверителност (вкл. секция "Бисквитки")
+terms.html                Условия за ползване
+404.html                  Custom "страница не е намерена" (GitHub Pages я ползва автоматично)
 admin.html                Администраторски панел (защитен)
 css/style.css             Малък custom CSS слой върху Tailwind
 js/firebase-config.js     Firebase инициализация + списък с админ имейли
-js/scene.js               Three.js "exploded camera" сцена, движена от скрола
-js/app.js                 Логика на публичния сайт (нав, вход/регистрация, feed-ове)
-js/admin.js               CRUD логика на админ панела
-firebase/firestore.rules  Firestore security rules
+js/scene.js               Three.js "exploded camera" сцена, движена от скрола (само index.html)
+js/cookies.js             Банер за съгласие с бисквитки (localStorage, всички страници)
+js/app.js                 Споделена логика (нав, вход/регистрация, преглед на feed-ове)
+js/gallery-page.js        Логика само за gallery.html (пагинация, lightbox)
+js/news-page.js           Логика само за news.html (пълен фийд, филтър)
+js/contact-page.js        Логика само за contact.html (изпращане на форма)
+js/admin.js               CRUD логика на админ панела (вкл. модул "Съобщения")
+firebase/firestore.rules  Firestore security rules (вкл. колекция "messages")
 firebase/storage.rules    Storage security rules
 assets/models/camera.glb  3D модел на камерата (виж assets/models/README.md)
 ```
+
+Всяка страница освен `admin.html` и `404.html` споделя един и същ header/footer
+и включва `js/cookies.js` + `js/app.js` за консистентна навигация, состояние на
+вход и банер за бисквитки. Само `index.html` зарежда Three.js/GSAP — другите
+страници нарочно не носят тежестта на 3D сцената.
 
 ## 1. Настройка на Firebase
 

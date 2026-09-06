@@ -50,6 +50,9 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
 const authArea = document.getElementById("auth-area");
 const adminLinkWrap = document.getElementById("admin-link-wrap");
 const adminLinkWrapMobile = document.getElementById("admin-link-wrap-mobile");
+// Pages other than the homepage don't have an #auth section — send those
+// visitors back to it instead of a dead in-page anchor.
+const authAnchorHref = document.getElementById("auth") ? "#auth" : "index.html#auth";
 
 function renderAuthArea(user) {
   if (!authArea) return;
@@ -70,7 +73,7 @@ function renderAuthArea(user) {
     adminLinkWrapMobile?.classList.toggle("hidden", !isAdmin);
   } else {
     authArea.innerHTML = `
-      <a href="#auth" class="rounded-full bg-accent-400 px-4 py-1.5 text-sm font-medium text-neutral-950 hover:bg-accent-300 transition">Вход / Регистрация</a>
+      <a href="${authAnchorHref}" class="rounded-full bg-accent-400 px-4 py-1.5 text-sm font-medium text-neutral-950 hover:bg-accent-300 transition">Вход / Регистрация</a>
     `;
     adminLinkWrap?.classList.add("hidden");
     adminLinkWrapMobile?.classList.add("hidden");
@@ -188,7 +191,7 @@ function translateAuthError(code) {
 // ---- Gallery feed (Firestore: photos) --------------------------------------
 const galleryGrid = document.getElementById("gallery-grid");
 if (galleryGrid) {
-  const q = query(collection(db, "photos"), orderBy("createdAt", "desc"), limit(24));
+  const q = query(collection(db, "photos"), orderBy("createdAt", "desc"), limit(8));
   onSnapshot(
     q,
     (snap) => {
@@ -234,8 +237,8 @@ function placeholderGallery() {
 // ---- News & stories feed (Firestore: news + stories) -----------------------
 const feedEl = document.getElementById("news-feed");
 if (feedEl) {
-  const newsQ = query(collection(db, "news"), orderBy("createdAt", "desc"), limit(10));
-  const storiesQ = query(collection(db, "stories"), orderBy("createdAt", "desc"), limit(10));
+  const newsQ = query(collection(db, "news"), orderBy("createdAt", "desc"), limit(3));
+  const storiesQ = query(collection(db, "stories"), orderBy("createdAt", "desc"), limit(3));
 
   let newsItems = [];
   let storyItems = [];
@@ -303,6 +306,9 @@ function escapeHtml(str) {
   }[c]));
 }
 
-// ---- Footer year -------------------------------------------------------------
-const yearEl = document.getElementById("current-year");
-if (yearEl) yearEl.textContent = new Date().getFullYear();
+// ---- Footer / page year(s) ---------------------------------------------------
+// A class (not just #current-year) so pages that show the year twice
+// (e.g. footer + "last updated" note) both get filled in.
+document.querySelectorAll("#current-year, .js-current-year").forEach((el) => {
+  el.textContent = new Date().getFullYear();
+});

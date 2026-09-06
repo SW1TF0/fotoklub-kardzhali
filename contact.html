@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="bg" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Контакти — Фото Клуб Кърджали</title>
+<meta name="description" content="Свържете се с Клуб по фотография към ЦПЛР-ОДК Кърджали." />
+<meta name="theme-color" content="#0a0a0a" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0a0a'/%3E%3Ccircle cx='50' cy='54' r='26' fill='none' stroke='%233b82f6' stroke-width='7'/%3E%3Ccircle cx='50' cy='54' r='11' fill='%233b82f6'/%3E%3Crect x='30' y='28' width='16' height='9' rx='2' fill='%233b82f6'/%3E%3C/svg%3E" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: { accent: { 400: "#3b82f6", 300: "#60a5fa" } },
+      },
+    },
+  };
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="bg-neutral-950 text-neutral-100 antialiased">
+
+<!-- ============================== HEADER ============================== -->
+<header class="content-layer glass-header fixed top-0 z-50 w-full border-b border-neutral-800/60">
+  <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+    <a href="index.html" class="flex items-center gap-2 text-lg font-bold tracking-tight">
+      <span class="text-accent-400">Фото</span>Клуб Кърджали
+    </a>
+
+    <nav class="hidden items-center gap-8 text-sm font-medium text-neutral-300 md:flex">
+      <a href="index.html#about" class="hover:text-accent-400 transition">За нас</a>
+      <a href="gallery.html" class="hover:text-accent-400 transition">Галерия</a>
+      <a href="news.html" class="hover:text-accent-400 transition">Новини и Истории</a>
+      <a href="contact.html" class="text-accent-400 transition">Контакти</a>
+      <span id="admin-link-wrap" class="hidden">
+        <a href="admin.html" class="hover:text-accent-400 transition">Админ панел</a>
+      </span>
+    </nav>
+
+    <div id="auth-area" class="hidden items-center gap-3 md:flex">
+      <a href="index.html#auth" class="rounded-full bg-accent-400 px-4 py-1.5 text-sm font-medium text-neutral-950 transition hover:bg-accent-300">Вход / Регистрация</a>
+    </div>
+
+    <button id="nav-toggle" aria-label="Меню" class="text-neutral-200 md:hidden">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+
+  <div id="mobile-menu" class="hidden flex-col gap-1 border-t border-neutral-800/60 px-6 pb-4 pt-2 md:hidden">
+    <a href="index.html#about" class="rounded-lg px-2 py-2 hover:bg-neutral-900">За нас</a>
+    <a href="gallery.html" class="rounded-lg px-2 py-2 hover:bg-neutral-900">Галерия</a>
+    <a href="news.html" class="rounded-lg px-2 py-2 hover:bg-neutral-900">Новини и Истории</a>
+    <a href="contact.html" class="rounded-lg px-2 py-2 bg-neutral-900 text-accent-400">Контакти</a>
+    <a href="index.html#auth" class="rounded-lg px-2 py-2 hover:bg-neutral-900">Вход / Регистрация</a>
+    <span id="admin-link-wrap-mobile" class="hidden">
+      <a href="admin.html" class="rounded-lg px-2 py-2 hover:bg-neutral-900">Админ панел</a>
+    </span>
+  </div>
+</header>
+
+<main class="content-layer mx-auto max-w-6xl px-6 pb-32 pt-36">
+  <div class="mb-12 text-center">
+    <p class="mb-3 text-xs font-medium uppercase tracking-widest text-accent-400">Контакти</p>
+    <h1 class="text-3xl font-bold sm:text-4xl">Свържете се с нас</h1>
+    <p class="mx-auto mt-4 max-w-2xl text-neutral-400">
+      Въпроси за членство, пленери или сътрудничество — пишете ни и ще отговорим възможно най-скоро.
+    </p>
+  </div>
+
+  <div class="grid gap-12 lg:grid-cols-2">
+    <!-- Info + map -->
+    <div>
+      <div class="mb-8 space-y-6">
+        <div class="flex gap-4">
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent-400/10 text-accent-400">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+          </div>
+          <div>
+            <p class="font-medium text-neutral-200">Адрес</p>
+            <p class="text-neutral-400">ЦПЛР-ОДК Кърджали, гр. Кърджали, България</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent-400/10 text-accent-400">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+          </div>
+          <div>
+            <p class="font-medium text-neutral-200">Имейл</p>
+            <p class="text-neutral-400">info@fotoklub-kardzhali.bg</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent-400/10 text-accent-400">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          </div>
+          <div>
+            <p class="font-medium text-neutral-200">Работно време</p>
+            <p class="text-neutral-400">Понеделник – Петък, 14:00 – 18:00</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="overflow-hidden rounded-2xl border border-neutral-800">
+        <iframe
+          title="Карта — ЦПЛР-ОДК Кърджали"
+          src="https://www.google.com/maps?q=%D0%9E%D0%94%D0%9A%20%D0%9A%D1%8A%D1%80%D0%B4%D0%B6%D0%B0%D0%BB%D0%B8&output=embed"
+          class="h-72 w-full grayscale"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="rounded-2xl border border-neutral-800 bg-neutral-900/60 p-8">
+      <form id="contact-form" class="space-y-5">
+        <div>
+          <label class="mb-1 block text-xs font-medium text-neutral-400">Име</label>
+          <input name="name" type="text" required class="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-4 py-2.5 text-sm outline-none focus:border-accent-400" />
+        </div>
+        <div>
+          <label class="mb-1 block text-xs font-medium text-neutral-400">Имейл</label>
+          <input name="email" type="email" required class="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-4 py-2.5 text-sm outline-none focus:border-accent-400" />
+        </div>
+        <div>
+          <label class="mb-1 block text-xs font-medium text-neutral-400">Съобщение</label>
+          <textarea name="message" rows="5" required class="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-4 py-2.5 text-sm outline-none focus:border-accent-400"></textarea>
+        </div>
+        <p data-status class="text-sm text-accent-400"></p>
+        <button type="submit" class="w-full rounded-full bg-accent-400 py-2.5 text-sm font-semibold text-neutral-950 transition hover:bg-accent-300">
+          Изпрати съобщение
+        </button>
+        <p class="text-xs text-neutral-500">
+          Изпращайки формата, приемате нашата
+          <a href="privacy.html" class="underline hover:text-accent-400">Политика за поверителност</a>.
+        </p>
+      </form>
+    </div>
+  </div>
+</main>
+
+<!-- ============================== FOOTER ============================== -->
+<footer class="content-layer border-t border-neutral-900 px-6 py-16 text-sm text-neutral-500">
+  <div class="mx-auto grid max-w-7xl gap-10 sm:grid-cols-2 lg:grid-cols-4">
+    <div>
+      <p class="flex items-center gap-2 text-lg font-bold text-neutral-100">
+        <span class="text-accent-400">Фото</span>Клуб Кърджали
+      </p>
+      <p class="mt-3 leading-relaxed">
+        гр. Кърджали &middot; Център за подкрепа на личностното развитие –
+        Общински детски комплекс (ЦПЛР-ОДК)
+      </p>
+    </div>
+    <div>
+      <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-neutral-300">Навигация</p>
+      <ul class="space-y-2">
+        <li><a href="index.html#about" class="hover:text-accent-400 transition">За нас</a></li>
+        <li><a href="gallery.html" class="hover:text-accent-400 transition">Галерия</a></li>
+        <li><a href="news.html" class="hover:text-accent-400 transition">Новини и Истории</a></li>
+        <li><a href="contact.html" class="hover:text-accent-400 transition">Контакти</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-neutral-300">Профил</p>
+      <ul class="space-y-2">
+        <li><a href="index.html#auth" class="hover:text-accent-400 transition">Вход / Регистрация</a></li>
+        <li><a href="admin.html" class="hover:text-accent-400 transition">Админ панел</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-neutral-300">Правна информация</p>
+      <ul class="space-y-2">
+        <li><a href="privacy.html" class="hover:text-accent-400 transition">Поверителност</a></li>
+        <li><a href="privacy.html#cookies" class="hover:text-accent-400 transition">Бисквитки</a></li>
+        <li><a href="terms.html" class="hover:text-accent-400 transition">Условия за ползване</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="mx-auto mt-12 max-w-7xl border-t border-neutral-900 pt-6 text-center">
+    <p>&copy; <span id="current-year"></span> Фото Клуб Кърджали. Всички права запазени.</p>
+  </div>
+</footer>
+
+<script type="module" src="js/cookies.js"></script>
+<script type="module" src="js/app.js"></script>
+<script type="module" src="js/contact-page.js"></script>
+</body>
+</html>
