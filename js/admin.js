@@ -123,7 +123,7 @@ function initPhotosModule() {
   const q = query(collection(db, "photos"), orderBy("createdAt", "desc"));
   onSnapshot(q, (snap) => {
     if (snap.empty) {
-      listEl.innerHTML = `<p class="text-sm text-neutral-500">Все още няма качени снимки.</p>`;
+      listEl.innerHTML = `<p class="text-sm text-neutral-400">Все още няма качени снимки.</p>`;
       return;
     }
     listEl.innerHTML = snap.docs
@@ -267,7 +267,7 @@ function initSimpleContentModule({
   const q = query(collection(db, collectionName), orderBy("createdAt", "desc"));
   onSnapshot(q, (snap) => {
     if (snap.empty) {
-      listEl.innerHTML = `<p class="text-sm text-neutral-500">Все още няма записи.</p>`;
+      listEl.innerHTML = `<p class="text-sm text-neutral-400">Все още няма записи.</p>`;
       return;
     }
     listEl.innerHTML = snap.docs
@@ -281,7 +281,7 @@ function initSimpleContentModule({
           <div class="mb-2 flex items-start justify-between gap-3">
             <div>
               <p class="font-medium text-neutral-200">${escapeHtml(item.title || "")}</p>
-              <p class="text-xs text-neutral-500">${date}</p>
+              <p class="text-xs text-neutral-400">${date}</p>
             </div>
             <div class="flex shrink-0 gap-2">
               <button data-edit="${d.id}" class="rounded-lg border border-neutral-700 px-3 py-1.5 text-xs hover:border-accent-400 hover:text-accent-400">Редакция</button>
@@ -362,13 +362,13 @@ function initUsersModule() {
   onSnapshot(q, (snap) => {
     if (countEl) countEl.textContent = snap.size;
     if (snap.empty) {
-      listEl.innerHTML = `<p class="text-sm text-neutral-500">Все още няма регистрирани потребители.</p>`;
+      listEl.innerHTML = `<p class="text-sm text-neutral-400">Все още няма регистрирани потребители.</p>`;
       return;
     }
     listEl.innerHTML = `
       <table class="w-full text-left text-sm">
         <thead>
-          <tr class="border-b border-neutral-800 text-neutral-500">
+          <tr class="border-b border-neutral-800 text-neutral-400">
             <th class="py-2 pr-4 font-medium">Име</th>
             <th class="py-2 pr-4 font-medium">Имейл</th>
             <th class="py-2 pr-4 font-medium">Регистриран на</th>
@@ -385,7 +385,7 @@ function initUsersModule() {
               <tr class="border-b border-neutral-900">
                 <td class="py-2 pr-4 text-neutral-200">${escapeHtml(u.name || "—")}</td>
                 <td class="py-2 pr-4 text-neutral-400">${escapeHtml(u.email || "—")}</td>
-                <td class="py-2 pr-4 text-neutral-500">${date}</td>
+                <td class="py-2 pr-4 text-neutral-400">${date}</td>
               </tr>`;
             })
             .join("")}
@@ -404,7 +404,7 @@ function initMessagesModule() {
   const q = query(collection(db, "messages"), orderBy("createdAt", "desc"));
   onSnapshot(q, (snap) => {
     if (snap.empty) {
-      listEl.innerHTML = `<p class="text-sm text-neutral-500">Все още няма получени съобщения.</p>`;
+      listEl.innerHTML = `<p class="text-sm text-neutral-400">Все още няма получени съобщения.</p>`;
       return;
     }
     listEl.innerHTML = snap.docs
@@ -418,7 +418,7 @@ function initMessagesModule() {
           <div class="mb-2 flex items-start justify-between gap-3">
             <div>
               <p class="font-medium text-neutral-200">${escapeHtml(m.name || "—")}</p>
-              <p class="text-xs text-neutral-500">${escapeHtml(m.email || "—")} &middot; ${date}</p>
+              <p class="text-xs text-neutral-400">${escapeHtml(m.email || "—")} &middot; ${date}</p>
             </div>
             <button data-delete="${d.id}" class="shrink-0 rounded-lg border border-red-900 px-3 py-1.5 text-xs text-red-400 hover:bg-red-950">Изтрий</button>
           </div>

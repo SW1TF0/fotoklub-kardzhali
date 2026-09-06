@@ -42,7 +42,7 @@ function renderFeedCard(item) {
     <article class="rounded-2xl border border-neutral-800 bg-neutral-900/60 p-6">
       <div class="mb-3 flex items-center gap-3">
         ${badge}
-        <span class="text-xs text-neutral-500">${date}</span>
+        <span class="text-xs text-neutral-400">${date}</span>
       </div>
       <h2 class="mb-2 text-lg font-semibold text-neutral-100">${escapeHtml(item.title || "")}</h2>
       <p class="text-sm leading-relaxed text-neutral-400">${escapeHtml(item.content || "")}</p>
@@ -52,7 +52,7 @@ function renderFeedCard(item) {
 function placeholderFeed() {
   return `
     <article class="rounded-2xl border border-neutral-800 bg-neutral-900/60 p-6 text-center">
-      <p class="text-sm text-neutral-500">Все още няма публикувано съдържание в тази категория.</p>
+      <p class="text-sm text-neutral-400">Все още няма публикувано съдържание в тази категория.</p>
     </article>`;
 }
 

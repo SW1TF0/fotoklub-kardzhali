@@ -25,6 +25,7 @@
 <link rel="stylesheet" href="css/style.css" />
 </head>
 <body class="bg-neutral-950 text-neutral-100 antialiased">
+<a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-accent-400 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-neutral-950">Към съдържанието</a>
 
 <!-- ============================== HEADER ============================== -->
 <header class="content-layer glass-header fixed top-0 z-50 w-full border-b border-neutral-800/60">
@@ -66,7 +67,7 @@
   </div>
 </header>
 
-<main class="content-layer mx-auto max-w-7xl px-6 pb-32 pt-36">
+<main id="main-content" class="content-layer mx-auto max-w-7xl px-6 pb-32 pt-36">
   <div class="mb-12 text-center">
     <p class="mb-3 text-xs font-medium uppercase tracking-widest text-accent-400">Галерия</p>
     <h1 class="text-3xl font-bold sm:text-4xl">Кадри от нашите членове</h1>
@@ -86,7 +87,7 @@
 </main>
 
 <!-- ============================== LIGHTBOX ============================== -->
-<div id="lightbox" class="fixed inset-0 z-[70] hidden items-center justify-center bg-black/90 p-4 backdrop-blur-sm">
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Преглед на снимка" class="fixed inset-0 z-[70] hidden items-center justify-center bg-black/90 p-4 backdrop-blur-sm">
   <button id="lightbox-close" aria-label="Затвори" class="absolute right-4 top-4 rounded-full border border-neutral-700 p-2 text-neutral-200 hover:border-accent-400 hover:text-accent-400">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
   </button>
@@ -103,7 +104,7 @@
 </div>
 
 <!-- ============================== FOOTER ============================== -->
-<footer class="content-layer border-t border-neutral-900 px-6 py-16 text-sm text-neutral-500">
+<footer class="content-layer border-t border-neutral-900 px-6 py-16 text-sm text-neutral-400">
   <div class="mx-auto grid max-w-7xl gap-10 sm:grid-cols-2 lg:grid-cols-4">
     <div>
       <p class="flex items-center gap-2 text-lg font-bold text-neutral-100">

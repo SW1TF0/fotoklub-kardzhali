@@ -40,7 +40,7 @@ function renderPlaceholder() {
     .map(
       (n) => `
       <figure class="mb-4 break-inside-avoid overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900">
-        <div class="flex aspect-[${n % 2 === 0 ? "3/4" : "4/3"}] items-center justify-center bg-gradient-to-br from-neutral-800 to-neutral-900 text-sm text-neutral-600">
+        <div class="flex aspect-[${n % 2 === 0 ? "3/4" : "4/3"}] items-center justify-center bg-gradient-to-br from-neutral-800 to-neutral-900 text-sm text-neutral-400">
           Снимка ${n} (демо)
         </div>
       </figure>`
@@ -121,20 +121,31 @@ if (grid) loadNextPage();
 const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightbox-img");
 const lightboxCaption = document.getElementById("lightbox-caption");
+const lightboxCloseBtn = document.getElementById("lightbox-close");
 let currentIndex = -1;
+let lastFocusedEl = null;
+
+function getFocusableInLightbox() {
+  return Array.from(
+    lightbox.querySelectorAll("button, [href], [tabindex]:not([tabindex='-1'])")
+  );
+}
 
 function openLightbox(index) {
   currentIndex = index;
+  lastFocusedEl = document.activeElement;
   showCurrent();
   lightbox.classList.remove("hidden");
   lightbox.classList.add("flex");
   document.body.style.overflow = "hidden";
+  lightboxCloseBtn?.focus();
 }
 
 function closeLightbox() {
   lightbox.classList.add("hidden");
   lightbox.classList.remove("flex");
   document.body.style.overflow = "";
+  lastFocusedEl?.focus();
 }
 
 function showCurrent() {
@@ -170,4 +181,18 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeLightbox();
   if (e.key === "ArrowRight") showNext();
   if (e.key === "ArrowLeft") showPrev();
+  if (e.key === "Tab") {
+    // Keep keyboard focus inside the dialog while it's open.
+    const focusable = getFocusableInLightbox();
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
 });
