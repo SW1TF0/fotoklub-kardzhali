@@ -109,11 +109,11 @@ function showTab(which) {
   tabLogin.classList.toggle("text-accent-400", loginActive);
   tabLogin.classList.toggle("border-accent-400", loginActive);
   tabLogin.classList.toggle("border-transparent", !loginActive);
-  tabLogin.classList.toggle("text-neutral-500", !loginActive);
+  tabLogin.classList.toggle("text-neutral-400", !loginActive);
   tabRegister.classList.toggle("text-accent-400", !loginActive);
   tabRegister.classList.toggle("border-accent-400", !loginActive);
   tabRegister.classList.toggle("border-transparent", loginActive);
-  tabRegister.classList.toggle("text-neutral-500", loginActive);
+  tabRegister.classList.toggle("text-neutral-400", loginActive);
 }
 tabLogin?.addEventListener("click", () => showTab("login"));
 tabRegister?.addEventListener("click", () => showTab("register"));
@@ -184,6 +184,12 @@ function translateAuthError(code) {
     "auth/wrong-password": "Грешна парола.",
     "auth/invalid-credential": "Грешен имейл или парола.",
     "auth/missing-password": "Моля, въведете парола.",
+    "auth/invalid-api-key": "Сайтът все още не е свързан с Firebase. Свържете се с администратор.",
+    "auth/api-key-not-valid.-please-pass-a-valid-api-key.":
+      "Сайтът все още не е свързан с Firebase. Свържете се с администратор.",
+    "auth/configuration-not-found": "Сайтът все още не е свързан с Firebase. Свържете се с администратор.",
+    "auth/network-request-failed": "Няма връзка с мрежата. Проверете интернет връзката си.",
+    "auth/popup-closed-by-user": "Прозорецът за вход беше затворен, преди да завърши.",
   };
   return map[code] || "Възникна грешка. Опитайте отново.";
 }
@@ -226,7 +232,7 @@ function placeholderGallery() {
     .map(
       (n) => `
       <figure class="mb-4 break-inside-avoid overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900">
-        <div class="flex aspect-[${n % 2 === 0 ? "3/4" : "4/3"}] items-center justify-center bg-gradient-to-br from-neutral-800 to-neutral-900 text-neutral-600 text-sm">
+        <div class="flex aspect-[${n % 2 === 0 ? "3/4" : "4/3"}] items-center justify-center bg-gradient-to-br from-neutral-800 to-neutral-900 text-neutral-400 text-sm">
           Снимка ${n} (демо)
         </div>
       </figure>`
@@ -266,7 +272,7 @@ if (feedEl) {
       <article class="rounded-2xl border border-neutral-800 bg-neutral-900/60 p-6">
         <div class="mb-3 flex items-center gap-3">
           ${badge}
-          <span class="text-xs text-neutral-500">${date}</span>
+          <span class="text-xs text-neutral-400">${date}</span>
         </div>
         <h3 class="mb-2 text-lg font-semibold text-neutral-100">${escapeHtml(item.title || "")}</h3>
         <p class="text-sm leading-relaxed text-neutral-400">${escapeHtml(item.content || "")}</p>
@@ -278,7 +284,7 @@ if (feedEl) {
       <article class="rounded-2xl border border-neutral-800 bg-neutral-900/60 p-6">
         <div class="mb-3 flex items-center gap-3">
           <span class="rounded-full bg-neutral-700/40 px-3 py-1 text-xs font-medium text-neutral-300">Новина</span>
-          <span class="text-xs text-neutral-500">Скоро</span>
+          <span class="text-xs text-neutral-400">Скоро</span>
         </div>
         <h3 class="mb-2 text-lg font-semibold text-neutral-100">Новините на клуба ще се появят тук</h3>
         <p class="text-sm leading-relaxed text-neutral-400">Съдържанието се добавя от администраторския панел и ще се показва автоматично.</p>

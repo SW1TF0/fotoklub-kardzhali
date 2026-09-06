@@ -33,17 +33,17 @@
     <h1 class="mb-6 text-2xl font-bold">Вход за администратори</h1>
     <form id="admin-login-form" class="space-y-4">
       <div>
-        <label class="mb-1 block text-xs font-medium text-neutral-400">Имейл</label>
-        <input name="email" type="email" required class="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-4 py-2.5 text-sm outline-none focus:border-accent-400" />
+        <label for="admin-login-email" class="mb-1 block text-xs font-medium text-neutral-400">Имейл</label>
+        <input id="admin-login-email" name="email" type="email" autocomplete="email" required class="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-4 py-2.5 text-sm outline-none focus:border-accent-400 focus:ring-2 focus:ring-accent-400/40" />
       </div>
       <div>
-        <label class="mb-1 block text-xs font-medium text-neutral-400">Парола</label>
-        <input name="password" type="password" required class="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-4 py-2.5 text-sm outline-none focus:border-accent-400" />
+        <label for="admin-login-password" class="mb-1 block text-xs font-medium text-neutral-400">Парола</label>
+        <input id="admin-login-password" name="password" type="password" autocomplete="current-password" required class="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-4 py-2.5 text-sm outline-none focus:border-accent-400 focus:ring-2 focus:ring-accent-400/40" />
       </div>
-      <p data-error class="text-sm text-red-400"></p>
+      <p data-error class="text-sm text-red-400" role="alert"></p>
       <button type="submit" class="w-full rounded-full bg-accent-400 py-2.5 text-sm font-semibold text-neutral-950 hover:bg-accent-300 transition">Влез</button>
     </form>
-    <a href="index.html" class="mt-6 block text-center text-xs text-neutral-500 hover:text-accent-400">&larr; Обратно към сайта</a>
+    <a href="index.html" class="mt-6 block text-center text-xs text-neutral-400 hover:text-accent-400">&larr; Обратно към сайта</a>
   </div>
 </section>
 
@@ -87,8 +87,8 @@
     <div class="mt-10 border-t border-neutral-900 pt-6">
       <p class="mb-1 truncate text-sm text-neutral-300" id="admin-name"></p>
       <div class="flex flex-col gap-2">
-        <a href="index.html" class="text-xs text-neutral-500 hover:text-accent-400">&larr; Обратно към сайта</a>
-        <button data-admin-logout class="text-left text-xs text-neutral-500 hover:text-accent-400">Изход</button>
+        <a href="index.html" class="text-xs text-neutral-400 hover:text-accent-400">&larr; Обратно към сайта</a>
+        <button data-admin-logout class="text-left text-xs text-neutral-400 hover:text-accent-400">Изход</button>
       </div>
     </div>
   </aside>
@@ -103,18 +103,18 @@
     <section data-panel="photos" class="space-y-8">
       <div>
         <h2 class="text-2xl font-bold">Снимки</h2>
-        <p class="text-sm text-neutral-500">Качвайте, редактирайте и изтривайте снимки от публичната галерия.</p>
+        <p class="text-sm text-neutral-400">Качвайте, редактирайте и изтривайте снимки от публичната галерия.</p>
       </div>
 
       <form id="photo-form" class="grid gap-4 rounded-2xl border border-neutral-800 bg-neutral-900/60 p-6 sm:grid-cols-2">
         <input type="hidden" id="photo-edit-id" />
         <div class="sm:col-span-2">
-          <label class="mb-1 block text-xs font-medium text-neutral-400">Заглавие</label>
-          <input name="title" type="text" placeholder="Напр. Залез над Кърджали" class="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-4 py-2.5 text-sm outline-none focus:border-accent-400" />
+          <label for="photo-title" class="mb-1 block text-xs font-medium text-neutral-400">Заглавие</label>
+          <input id="photo-title" name="title" type="text" placeholder="Напр. Залез над Кърджали" class="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-4 py-2.5 text-sm outline-none focus:border-accent-400 focus:ring-2 focus:ring-accent-400/40" />
         </div>
         <div class="sm:col-span-2">
-          <label class="mb-1 block text-xs font-medium text-neutral-400">Файл с изображение</label>
-          <input id="photo-file" name="file" type="file" accept="image/*" required class="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-4 py-2.5 text-sm outline-none file:mr-4 file:rounded-full file:border-0 file:bg-accent-400 file:px-4 file:py-1.5 file:text-neutral-950" />
+          <label for="photo-file" class="mb-1 block text-xs font-medium text-neutral-400">Файл с изображение</label>
+          <input id="photo-file" name="file" type="file" accept="image/*" required class="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-accent-400/40 file:mr-4 file:rounded-full file:border-0 file:bg-accent-400 file:px-4 file:py-1.5 file:text-neutral-950" />
         </div>
         <p data-status class="text-sm text-accent-400 sm:col-span-2"></p>
         <div class="flex gap-3 sm:col-span-2">
@@ -130,18 +130,18 @@
     <section data-panel="stories" class="hidden space-y-8">
       <div>
         <h2 class="text-2xl font-bold">Истории</h2>
-        <p class="text-sm text-neutral-500">Добавяйте постижения и истории на клуба.</p>
+        <p class="text-sm text-neutral-400">Добавяйте постижения и истории на клуба.</p>
       </div>
 
       <form id="story-form" class="grid gap-4 rounded-2xl border border-neutral-800 bg-neutral-900/60 p-6">
         <input type="hidden" id="story-edit-id" />
         <div>
-          <label class="mb-1 block text-xs font-medium text-neutral-400">Заглавие</label>
-          <input name="title" type="text" required class="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-4 py-2.5 text-sm outline-none focus:border-accent-400" />
+          <label for="story-title" class="mb-1 block text-xs font-medium text-neutral-400">Заглавие</label>
+          <input id="story-title" name="title" type="text" required class="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-4 py-2.5 text-sm outline-none focus:border-accent-400 focus:ring-2 focus:ring-accent-400/40" />
         </div>
         <div>
-          <label class="mb-1 block text-xs font-medium text-neutral-400">Съдържание</label>
-          <textarea name="content" rows="4" required class="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-4 py-2.5 text-sm outline-none focus:border-accent-400"></textarea>
+          <label for="story-content" class="mb-1 block text-xs font-medium text-neutral-400">Съдържание</label>
+          <textarea id="story-content" name="content" rows="4" required class="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-4 py-2.5 text-sm outline-none focus:border-accent-400 focus:ring-2 focus:ring-accent-400/40"></textarea>
         </div>
         <p data-status class="text-sm text-accent-400"></p>
         <div class="flex gap-3">
@@ -157,18 +157,18 @@
     <section data-panel="news" class="hidden space-y-8">
       <div>
         <h2 class="text-2xl font-bold">Новини</h2>
-        <p class="text-sm text-neutral-500">Публикувайте новини и съобщения на клуба.</p>
+        <p class="text-sm text-neutral-400">Публикувайте новини и съобщения на клуба.</p>
       </div>
 
       <form id="news-form" class="grid gap-4 rounded-2xl border border-neutral-800 bg-neutral-900/60 p-6">
         <input type="hidden" id="news-edit-id" />
         <div>
-          <label class="mb-1 block text-xs font-medium text-neutral-400">Заглавие</label>
-          <input name="title" type="text" required class="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-4 py-2.5 text-sm outline-none focus:border-accent-400" />
+          <label for="news-title" class="mb-1 block text-xs font-medium text-neutral-400">Заглавие</label>
+          <input id="news-title" name="title" type="text" required class="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-4 py-2.5 text-sm outline-none focus:border-accent-400 focus:ring-2 focus:ring-accent-400/40" />
         </div>
         <div>
-          <label class="mb-1 block text-xs font-medium text-neutral-400">Съдържание</label>
-          <textarea name="content" rows="4" required class="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-4 py-2.5 text-sm outline-none focus:border-accent-400"></textarea>
+          <label for="news-content" class="mb-1 block text-xs font-medium text-neutral-400">Съдържание</label>
+          <textarea id="news-content" name="content" rows="4" required class="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-4 py-2.5 text-sm outline-none focus:border-accent-400 focus:ring-2 focus:ring-accent-400/40"></textarea>
         </div>
         <p data-status class="text-sm text-accent-400"></p>
         <div class="flex gap-3">
@@ -184,7 +184,7 @@
     <section data-panel="users" class="hidden space-y-6">
       <div>
         <h2 class="text-2xl font-bold">Регистрации</h2>
-        <p class="text-sm text-neutral-500">
+        <p class="text-sm text-neutral-400">
           Общо регистрирани потребители: <span id="users-count" class="font-semibold text-accent-400">0</span>
         </p>
       </div>
@@ -195,7 +195,7 @@
     <section data-panel="messages" class="hidden space-y-6">
       <div>
         <h2 class="text-2xl font-bold">Съобщения</h2>
-        <p class="text-sm text-neutral-500">Съобщения, изпратени през формата за контакт.</p>
+        <p class="text-sm text-neutral-400">Съобщения, изпратени през формата за контакт.</p>
       </div>
       <div id="messages-list" class="grid gap-3"></div>
     </section>

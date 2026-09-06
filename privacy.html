@@ -25,6 +25,7 @@
 <link rel="stylesheet" href="css/style.css" />
 </head>
 <body class="bg-neutral-950 text-neutral-100 antialiased">
+<a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-accent-400 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-neutral-950">Към съдържанието</a>
 
 <!-- ============================== HEADER ============================== -->
 <header class="content-layer glass-header fixed top-0 z-50 w-full border-b border-neutral-800/60">
@@ -66,7 +67,7 @@
   </div>
 </header>
 
-<main class="content-layer mx-auto max-w-3xl px-6 pb-32 pt-36">
+<main id="main-content" class="content-layer mx-auto max-w-3xl px-6 pb-32 pt-36">
   <p class="mb-3 text-xs font-medium uppercase tracking-widest text-accent-400">Правна информация</p>
   <h1 class="mb-10 text-3xl font-bold sm:text-4xl">Политика за поверителност</h1>
 
@@ -109,8 +110,24 @@
       </p>
     </section>
 
+    <section>
+      <h2 class="mb-2 text-lg font-semibold text-neutral-100">5. Услуги на трети страни</h2>
+      <p class="mb-3">Сайтът зарежда съдържание от следните трети страни:</p>
+      <ul class="ml-5 list-disc space-y-1">
+        <li><strong class="text-neutral-200">Firebase / Google Cloud</strong> — вход в профила, база данни и съхранение на файлове.</li>
+        <li><strong class="text-neutral-200">Вход с Google</strong> — по избор, при регистрация през бутона „Вход с Google“.</li>
+        <li><strong class="text-neutral-200">Google Maps</strong> — вграждаме карта на страницата за контакти; тя се зарежда само след ваше изрично съгласие (бутон „Зареди картата“).</li>
+        <li><strong class="text-neutral-200">Google Fonts, jsDelivr, cdnjs</strong> — доставят шрифтове и библиотеки (Tailwind CSS, GSAP, Three.js) за визуалното оформление на сайта.</li>
+      </ul>
+      <p class="mt-3">
+        Тези услуги могат да обработват технически данни (напр. IP адрес) съгласно
+        собствените си политики за поверителност. Не споделяме допълнителни лични данни
+        с тях извън необходимото за работата на съответната функция.
+      </p>
+    </section>
+
     <section id="cookies">
-      <h2 class="mb-2 text-lg font-semibold text-neutral-100">5. Бисквитки</h2>
+      <h2 class="mb-2 text-lg font-semibold text-neutral-100">6. Бисквитки</h2>
       <p class="mb-3">
         Сайтът използва минимален брой „бисквитки“ / локално съхранение в браузъра:
       </p>
@@ -124,27 +141,33 @@
           <strong class="text-neutral-200">Предпочитания</strong> — запомня избора ви от
           банера за бисквитки, за да не се показва отново.
         </li>
+        <li>
+          <strong class="text-neutral-200">На трети страни</strong> — ако изберете „Вход с
+          Google“ или заредите картата на страницата за контакти, Google може да постави
+          собствени бисквитки съгласно своята политика за поверителност.
+        </li>
       </ul>
       <p class="mt-3">
-        В момента сайтът не използва бисквитки за анализ или реклама. Ако това се промени
-        в бъдеще, банерът за съгласие ще бъде актуализиран съответно.
+        Не използваме бисквитки за анализ или реклама (напр. Google Analytics) и не
+        проследяваме поведението ви между сайтове. Ако това се промени в бъдеще, банерът
+        за съгласие ще бъде актуализиран съответно.
       </p>
     </section>
 
     <section>
-      <h2 class="mb-2 text-lg font-semibold text-neutral-100">6. Вашите права</h2>
+      <h2 class="mb-2 text-lg font-semibold text-neutral-100">7. Вашите права</h2>
       <p>
         Можете да поискате достъп, корекция или изтриване на данните си по всяко време,
         като се свържете с администратор на клуба през страницата за контакти.
       </p>
     </section>
 
-    <p class="text-sm text-neutral-600">Последна актуализация: <span class="js-current-year"></span> г.</p>
+    <p class="text-sm text-neutral-400">Последна актуализация: <span class="js-current-year"></span> г.</p>
   </div>
 </main>
 
 <!-- ============================== FOOTER ============================== -->
-<footer class="content-layer border-t border-neutral-900 px-6 py-16 text-sm text-neutral-500">
+<footer class="content-layer border-t border-neutral-900 px-6 py-16 text-sm text-neutral-400">
   <div class="mx-auto grid max-w-7xl gap-10 sm:grid-cols-2 lg:grid-cols-4">
     <div>
       <p class="flex items-center gap-2 text-lg font-bold text-neutral-100">
