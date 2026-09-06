@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="bg" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Галерия — Фото Клуб Кърджали</title>
+<meta name="description" content="Пълната галерия със снимки от членовете на Клуб по фотография към ЦПЛР-ОДК Кърджали." />
+<meta name="theme-color" content="#0a0a0a" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0a0a'/%3E%3Ccircle cx='50' cy='54' r='26' fill='none' stroke='%233b82f6' stroke-width='7'/%3E%3Ccircle cx='50' cy='54' r='11' fill='%233b82f6'/%3E%3Crect x='30' y='28' width='16' height='9' rx='2' fill='%233b82f6'/%3E%3C/svg%3E" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: { accent: { 400: "#3b82f6", 300: "#60a5fa" } },
+      },
+    },
+  };
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="bg-neutral-950 text-neutral-100 antialiased">
+
+<!-- ============================== HEADER ============================== -->
+<header class="content-layer glass-header fixed top-0 z-50 w-full border-b border-neutral-800/60">
+  <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+    <a href="index.html" class="flex items-center gap-2 text-lg font-bold tracking-tight">
+      <span class="text-accent-400">Фото</span>Клуб Кърджали
+    </a>
+
+    <nav class="hidden items-center gap-8 text-sm font-medium text-neutral-300 md:flex">
+      <a href="index.html#about" class="hover:text-accent-400 transition">За нас</a>
+      <a href="gallery.html" class="text-accent-400 transition">Галерия</a>
+      <a href="news.html" class="hover:text-accent-400 transition">Новини и Истории</a>
+      <a href="contact.html" class="hover:text-accent-400 transition">Контакти</a>
+      <span id="admin-link-wrap" class="hidden">
+        <a href="admin.html" class="hover:text-accent-400 transition">Админ панел</a>
+      </span>
+    </nav>
+
+    <div id="auth-area" class="hidden items-center gap-3 md:flex">
+      <a href="index.html#auth" class="rounded-full bg-accent-400 px-4 py-1.5 text-sm font-medium text-neutral-950 transition hover:bg-accent-300">Вход / Регистрация</a>
+    </div>
+
+    <button id="nav-toggle" aria-label="Меню" class="text-neutral-200 md:hidden">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+
+  <div id="mobile-menu" class="hidden flex-col gap-1 border-t border-neutral-800/60 px-6 pb-4 pt-2 md:hidden">
+    <a href="index.html#about" class="rounded-lg px-2 py-2 hover:bg-neutral-900">За нас</a>
+    <a href="gallery.html" class="rounded-lg px-2 py-2 bg-neutral-900 text-accent-400">Галерия</a>
+    <a href="news.html" class="rounded-lg px-2 py-2 hover:bg-neutral-900">Новини и Истории</a>
+    <a href="contact.html" class="rounded-lg px-2 py-2 hover:bg-neutral-900">Контакти</a>
+    <a href="index.html#auth" class="rounded-lg px-2 py-2 hover:bg-neutral-900">Вход / Регистрация</a>
+    <span id="admin-link-wrap-mobile" class="hidden">
+      <a href="admin.html" class="rounded-lg px-2 py-2 hover:bg-neutral-900">Админ панел</a>
+    </span>
+  </div>
+</header>
+
+<main class="content-layer mx-auto max-w-7xl px-6 pb-32 pt-36">
+  <div class="mb-12 text-center">
+    <p class="mb-3 text-xs font-medium uppercase tracking-widest text-accent-400">Галерия</p>
+    <h1 class="text-3xl font-bold sm:text-4xl">Кадри от нашите членове</h1>
+    <p class="mx-auto mt-4 max-w-2xl text-neutral-400">
+      Всички снимки, споделени от клуба — пленери, изложби и ежедневни моменти зад обектива.
+    </p>
+  </div>
+
+  <div id="gallery-grid-full" class="masonry">
+    <!-- Populated from Firestore collection "photos" via js/gallery-page.js -->
+  </div>
+  <p id="gallery-load-more-wrap" class="mt-10 hidden text-center">
+    <button id="gallery-load-more" class="rounded-full border border-neutral-700 px-6 py-2.5 text-sm font-semibold text-neutral-200 transition hover:border-accent-400 hover:text-accent-400">
+      Зареди още
+    </button>
+  </p>
+</main>
+
+<!-- ============================== LIGHTBOX ============================== -->
+<div id="lightbox" class="fixed inset-0 z-[70] hidden items-center justify-center bg-black/90 p-4 backdrop-blur-sm">
+  <button id="lightbox-close" aria-label="Затвори" class="absolute right-4 top-4 rounded-full border border-neutral-700 p-2 text-neutral-200 hover:border-accent-400 hover:text-accent-400">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+  </button>
+  <button id="lightbox-prev" aria-label="Предишна" class="absolute left-2 top-1/2 -translate-y-1/2 rounded-full border border-neutral-700 p-2 text-neutral-200 hover:border-accent-400 hover:text-accent-400 sm:left-6">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
+  </button>
+  <button id="lightbox-next" aria-label="Следваща" class="absolute right-2 top-1/2 -translate-y-1/2 rounded-full border border-neutral-700 p-2 text-neutral-200 hover:border-accent-400 hover:text-accent-400 sm:right-6">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+  </button>
+  <figure class="max-h-full max-w-4xl">
+    <img id="lightbox-img" src="" alt="" class="max-h-[80vh] w-full rounded-lg object-contain" />
+    <figcaption id="lightbox-caption" class="mt-4 text-center text-sm text-neutral-400"></figcaption>
+  </figure>
+</div>
+
+<!-- ============================== FOOTER ============================== -->
+<footer class="content-layer border-t border-neutral-900 px-6 py-16 text-sm text-neutral-500">
+  <div class="mx-auto grid max-w-7xl gap-10 sm:grid-cols-2 lg:grid-cols-4">
+    <div>
+      <p class="flex items-center gap-2 text-lg font-bold text-neutral-100">
+        <span class="text-accent-400">Фото</span>Клуб Кърджали
+      </p>
+      <p class="mt-3 leading-relaxed">
+        гр. Кърджали &middot; Център за подкрепа на личностното развитие –
+        Общински детски комплекс (ЦПЛР-ОДК)
+      </p>
+    </div>
+    <div>
+      <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-neutral-300">Навигация</p>
+      <ul class="space-y-2">
+        <li><a href="index.html#about" class="hover:text-accent-400 transition">За нас</a></li>
+        <li><a href="gallery.html" class="hover:text-accent-400 transition">Галерия</a></li>
+        <li><a href="news.html" class="hover:text-accent-400 transition">Новини и Истории</a></li>
+        <li><a href="contact.html" class="hover:text-accent-400 transition">Контакти</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-neutral-300">Профил</p>
+      <ul class="space-y-2">
+        <li><a href="index.html#auth" class="hover:text-accent-400 transition">Вход / Регистрация</a></li>
+        <li><a href="admin.html" class="hover:text-accent-400 transition">Админ панел</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-neutral-300">Правна информация</p>
+      <ul class="space-y-2">
+        <li><a href="privacy.html" class="hover:text-accent-400 transition">Поверителност</a></li>
+        <li><a href="privacy.html#cookies" class="hover:text-accent-400 transition">Бисквитки</a></li>
+        <li><a href="terms.html" class="hover:text-accent-400 transition">Условия за ползване</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="mx-auto mt-12 max-w-7xl border-t border-neutral-900 pt-6 text-center">
+    <p>&copy; <span id="current-year"></span> Фото Клуб Кърджали. Всички права запазени.</p>
+  </div>
+</footer>
+
+<script type="module" src="js/cookies.js"></script>
+<script type="module" src="js/app.js"></script>
+<script type="module" src="js/gallery-page.js"></script>
+</body>
+</html>

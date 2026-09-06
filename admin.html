@@ -79,6 +79,9 @@
       <button data-panel-target="users" class="w-full rounded-lg px-3 py-2.5 text-left text-neutral-400 transition hover:bg-neutral-900">
         Регистрации
       </button>
+      <button data-panel-target="messages" class="w-full rounded-lg px-3 py-2.5 text-left text-neutral-400 transition hover:bg-neutral-900">
+        Съобщения
+      </button>
     </nav>
 
     <div class="mt-10 border-t border-neutral-900 pt-6">
@@ -186,6 +189,15 @@
         </p>
       </div>
       <div id="users-list" class="overflow-x-auto rounded-2xl border border-neutral-800 bg-neutral-900/60 p-6"></div>
+    </section>
+
+    <!-- Panel: Messages -->
+    <section data-panel="messages" class="hidden space-y-6">
+      <div>
+        <h2 class="text-2xl font-bold">Съобщения</h2>
+        <p class="text-sm text-neutral-500">Съобщения, изпратени през формата за контакт.</p>
+      </div>
+      <div id="messages-list" class="grid gap-3"></div>
     </section>
   </main>
 </div>

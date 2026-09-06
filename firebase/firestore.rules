@@ -9,6 +9,9 @@ rules_version = '2';
 //   stories  { title, content, createdAt }            — public stories feed
 //   users    { uid, name, email, createdAt }           — one doc per registered
 //                                                        member, doc id = uid
+//   messages { name, email, message, createdAt }      — contact form submissions,
+//                                                        write-only for the public,
+//                                                        readable only by admins
 //
 // Admin check supports EITHER strategy described in js/firebase-config.js:
 //   1) email allowlist (isAdminEmail) — simplest, matches ADMIN_EMAILS in code
@@ -64,6 +67,21 @@ service cloud.firestore {
       allow read: if isSignedIn() && (request.auth.uid == userId || isAdmin());
       allow update: if isSignedIn() && request.auth.uid == userId;
       allow delete: if isAdmin();
+    }
+
+    // Contact form submissions: anyone can submit (create-only, no read/update
+    // so a submitter can never browse other people's messages); only admins
+    // can read or delete them (the "Съобщения" tab in admin.html).
+    match /messages/{messageId} {
+      allow create: if request.resource.data.keys().hasAll(["name", "email", "message"])
+                    && request.resource.data.name is string
+                    && request.resource.data.email is string
+                    && request.resource.data.message is string
+                    && request.resource.data.name.size() > 0
+                    && request.resource.data.message.size() > 0
+                    && request.resource.data.message.size() < 5000;
+      allow read, delete: if isAdmin();
+      allow update: if false;
     }
   }
 }

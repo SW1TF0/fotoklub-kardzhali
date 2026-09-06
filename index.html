@@ -2,9 +2,22 @@
 <html lang="bg" class="scroll-smooth">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Клуб по фотография към ЦПЛР-ОДК Кърджали</title>
 <meta name="description" content="Клуб по фотография към ЦПЛР-ОДК Кърджали — галерия, новини, истории и общност от фотографи." />
+<meta name="theme-color" content="#0a0a0a" />
+<link rel="canonical" href="https://sw1tf0.github.io/fotoklub-kardzhali/" />
+
+<!-- Open Graph / social sharing -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Клуб по фотография към ЦПЛР-ОДК Кърджали" />
+<meta property="og:description" content="Галерия, новини, истории и общност от фотографи в Кърджали." />
+<meta property="og:image" content="assets/img/og-cover.svg" />
+<meta property="og:locale" content="bg_BG" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<!-- Favicon (inline SVG — no binary asset needed) -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0a0a'/%3E%3Ccircle cx='50' cy='54' r='26' fill='none' stroke='%233b82f6' stroke-width='7'/%3E%3Ccircle cx='50' cy='54' r='11' fill='%233b82f6'/%3E%3Crect x='30' y='28' width='16' height='9' rx='2' fill='%233b82f6'/%3E%3C/svg%3E" />
 
 <!-- Tailwind CSS (CDN, no build step) -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -58,8 +71,9 @@
 
     <nav class="hidden items-center gap-8 text-sm font-medium text-neutral-300 md:flex">
       <a href="#about" class="hover:text-accent-400 transition">За нас</a>
-      <a href="#gallery" class="hover:text-accent-400 transition">Галерия</a>
-      <a href="#news" class="hover:text-accent-400 transition">Новини и Истории</a>
+      <a href="gallery.html" class="hover:text-accent-400 transition">Галерия</a>
+      <a href="news.html" class="hover:text-accent-400 transition">Новини и Истории</a>
+      <a href="contact.html" class="hover:text-accent-400 transition">Контакти</a>
       <span id="admin-link-wrap" class="hidden">
         <a href="admin.html" class="hover:text-accent-400 transition">Админ панел</a>
       </span>
@@ -78,8 +92,9 @@
 
   <div id="mobile-menu" class="hidden flex-col gap-1 border-t border-neutral-800/60 px-6 pb-4 pt-2 md:hidden">
     <a href="#about" class="rounded-lg px-2 py-2 hover:bg-neutral-900">За нас</a>
-    <a href="#gallery" class="rounded-lg px-2 py-2 hover:bg-neutral-900">Галерия</a>
-    <a href="#news" class="rounded-lg px-2 py-2 hover:bg-neutral-900">Новини и Истории</a>
+    <a href="gallery.html" class="rounded-lg px-2 py-2 hover:bg-neutral-900">Галерия</a>
+    <a href="news.html" class="rounded-lg px-2 py-2 hover:bg-neutral-900">Новини и Истории</a>
+    <a href="contact.html" class="rounded-lg px-2 py-2 hover:bg-neutral-900">Контакти</a>
     <a href="#auth" class="rounded-lg px-2 py-2 hover:bg-neutral-900">Вход / Регистрация</a>
     <span id="admin-link-wrap-mobile" class="hidden">
       <a href="admin.html" class="rounded-lg px-2 py-2 hover:bg-neutral-900">Админ панел</a>
@@ -103,7 +118,7 @@
       истории чрез светлина, кадър и мигове, които остават.
     </p>
     <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
-      <a href="#gallery" class="rounded-full bg-accent-400 px-6 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-accent-300">
+      <a href="gallery.html" class="rounded-full bg-accent-400 px-6 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-accent-300">
         Разгледай галерията
       </a>
       <a href="#auth" class="rounded-full border border-neutral-700 px-6 py-3 text-sm font-semibold text-neutral-200 transition hover:border-accent-400 hover:text-accent-400">
@@ -166,6 +181,12 @@
     <div id="gallery-grid" class="masonry">
       <!-- Populated from Firestore collection "photos" via js/app.js -->
     </div>
+    <div class="mt-10 text-center">
+      <a href="gallery.html" class="inline-flex items-center gap-2 text-sm font-semibold text-accent-400 hover:text-accent-300">
+        Виж цялата галерия
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+      </a>
+    </div>
   </section>
 
   <!-- ============================== NEWS & STORIES ============================== -->
@@ -176,6 +197,12 @@
     </div>
     <div id="news-feed" class="grid gap-6">
       <!-- Populated from Firestore collections "news" + "stories" via js/app.js -->
+    </div>
+    <div class="mt-10 text-center">
+      <a href="news.html" class="inline-flex items-center gap-2 text-sm font-semibold text-accent-400 hover:text-accent-300">
+        Виж всички новини и истории
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+      </a>
     </div>
   </section>
 
@@ -255,12 +282,48 @@
 </main>
 
 <!-- ============================== FOOTER ============================== -->
-<footer class="content-layer border-t border-neutral-900 px-6 py-10 text-center text-sm text-neutral-500">
-  <p class="font-medium text-neutral-300">Клуб по фотография към ЦПЛР-ОДК Кърджали</p>
-  <p class="mt-1">гр. Кърджали &middot; Център за подкрепа на личностното развитие – Общински детски комплекс</p>
-  <p class="mt-4">&copy; <span id="current-year"></span> Фото Клуб Кърджали. Всички права запазени.</p>
+<footer class="content-layer border-t border-neutral-900 px-6 py-16 text-sm text-neutral-500">
+  <div class="mx-auto grid max-w-7xl gap-10 sm:grid-cols-2 lg:grid-cols-4">
+    <div>
+      <p class="flex items-center gap-2 text-lg font-bold text-neutral-100">
+        <span class="text-accent-400">Фото</span>Клуб Кърджали
+      </p>
+      <p class="mt-3 leading-relaxed">
+        гр. Кърджали &middot; Център за подкрепа на личностното развитие –
+        Общински детски комплекс (ЦПЛР-ОДК)
+      </p>
+    </div>
+    <div>
+      <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-neutral-300">Навигация</p>
+      <ul class="space-y-2">
+        <li><a href="index.html#about" class="hover:text-accent-400 transition">За нас</a></li>
+        <li><a href="gallery.html" class="hover:text-accent-400 transition">Галерия</a></li>
+        <li><a href="news.html" class="hover:text-accent-400 transition">Новини и Истории</a></li>
+        <li><a href="contact.html" class="hover:text-accent-400 transition">Контакти</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-neutral-300">Профил</p>
+      <ul class="space-y-2">
+        <li><a href="index.html#auth" class="hover:text-accent-400 transition">Вход / Регистрация</a></li>
+        <li><a href="admin.html" class="hover:text-accent-400 transition">Админ панел</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-neutral-300">Правна информация</p>
+      <ul class="space-y-2">
+        <li><a href="privacy.html" class="hover:text-accent-400 transition">Поверителност</a></li>
+        <li><a href="privacy.html#cookies" class="hover:text-accent-400 transition">Бисквитки</a></li>
+        <li><a href="terms.html" class="hover:text-accent-400 transition">Условия за ползване</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="mx-auto mt-12 max-w-7xl border-t border-neutral-900 pt-6 text-center">
+    <p>&copy; <span id="current-year"></span> Фото Клуб Кърджали. Всички права запазени.</p>
+  </div>
 </footer>
 
+<script type="module" src="js/cookies.js"></script>
 <script type="module" src="js/app.js"></script>
 <script type="module" src="js/scene.js"></script>
 </body>

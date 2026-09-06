@@ -106,6 +106,7 @@ function initModules() {
   initStoriesModule();
   initNewsModule();
   initUsersModule();
+  initMessagesModule();
 }
 
 // ==============================================================================
@@ -390,6 +391,48 @@ function initUsersModule() {
             .join("")}
         </tbody>
       </table>`;
+  });
+}
+
+// ==============================================================================
+// Module 5 — Съобщения (Contact messages) — read + delete only
+// ==============================================================================
+function initMessagesModule() {
+  const listEl = document.getElementById("messages-list");
+  if (!listEl) return;
+
+  const q = query(collection(db, "messages"), orderBy("createdAt", "desc"));
+  onSnapshot(q, (snap) => {
+    if (snap.empty) {
+      listEl.innerHTML = `<p class="text-sm text-neutral-500">Все още няма получени съобщения.</p>`;
+      return;
+    }
+    listEl.innerHTML = snap.docs
+      .map((d) => {
+        const m = d.data();
+        const date = m.createdAt?.toDate
+          ? m.createdAt.toDate().toLocaleString("bg-BG")
+          : "";
+        return `
+        <div class="rounded-xl border border-neutral-800 bg-neutral-900 p-4">
+          <div class="mb-2 flex items-start justify-between gap-3">
+            <div>
+              <p class="font-medium text-neutral-200">${escapeHtml(m.name || "—")}</p>
+              <p class="text-xs text-neutral-500">${escapeHtml(m.email || "—")} &middot; ${date}</p>
+            </div>
+            <button data-delete="${d.id}" class="shrink-0 rounded-lg border border-red-900 px-3 py-1.5 text-xs text-red-400 hover:bg-red-950">Изтрий</button>
+          </div>
+          <p class="text-sm text-neutral-400">${escapeHtml(m.message || "")}</p>
+        </div>`;
+      })
+      .join("");
+
+    listEl.querySelectorAll("[data-delete]").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        if (!confirm("Изтриване на съобщението?")) return;
+        await deleteDoc(doc(db, "messages", btn.dataset.delete));
+      });
+    });
   });
 }
 

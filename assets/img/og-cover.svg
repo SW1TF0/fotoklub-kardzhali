@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0a0a0a" />
+  <circle cx="880" cy="315" r="220" fill="none" stroke="#3b82f6" stroke-width="26" opacity="0.9" />
+  <circle cx="880" cy="315" r="90" fill="#3b82f6" opacity="0.85" />
+  <rect x="770" y="150" width="120" height="60" rx="10" fill="#1a1a1e" />
+  <text x="80" y="290" font-family="Inter, Arial, sans-serif" font-size="58" font-weight="800" fill="#ffffff">Клуб по фотография</text>
+  <text x="80" y="360" font-family="Inter, Arial, sans-serif" font-size="58" font-weight="800" fill="#3b82f6">към ЦПЛР-ОДК Кърджали</text>
+  <text x="80" y="420" font-family="Inter, Arial, sans-serif" font-size="26" fill="#a3a3a3">Галерия &#183; Новини &#183; Истории &#183; Общност от фотографи</text>
+</svg>
