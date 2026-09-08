@@ -34,6 +34,8 @@ js/admin.js               CRUD логика на админ панела (вкл
 firebase/firestore.rules  Firestore security rules (вкл. колекция "messages")
 firebase/storage.rules    Storage security rules
 assets/models/camera.glb  3D модел на камерата (виж assets/models/README.md)
+js/parallax-bg.js         Скрол паралакс за фона на началния екран (само index.html)
+assets/img/mountains-photo.jpg  Реална снимка за фона (CC0, виж "Кредити" по-долу)
 ```
 
 Всяка страница освен `admin.html` и `404.html` споделя един и същ header/footer
@@ -94,3 +96,10 @@ powershell -File scripts/serve.ps1
 1. Push-нете репото в GitHub.
 2. Settings → Pages → Source: `Deploy from a branch` → Branch: `main` / `root`.
 3. Сайтът ще е достъпен на `https://<потребител>.github.io/<repo>/`.
+
+## Кредити
+
+- `assets/img/mountains-photo.jpg` — "Sunset in the mountains" от
+  [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Sunset_in_the_mountains_(Unsplash).jpg),
+  публикувана под CC0 1.0 (свободна за ползване, без изискване за
+  атрибуция — цитирано тук просто за прозрачност).

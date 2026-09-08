@@ -60,9 +60,16 @@
 <body class="bg-neutral-950 text-neutral-100 antialiased">
 <a href="#top" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-accent-400 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-neutral-950">Към съдържанието</a>
 
-<!-- Colourful mountain backdrop (original artwork) behind the hero — scrolls
-     away naturally with the page rather than staying pinned. -->
-<div id="bg-mountains" aria-hidden="true"></div>
+<!-- Multi-layer parallax backdrop behind the hero: a real CC0 photo (deep
+     layer) plus two silhouette ridge layers, each moving at a different
+     speed on scroll (see js/parallax-bg.js). Scrolls away naturally with
+     the page rather than staying pinned. -->
+<div id="parallax-bg" aria-hidden="true">
+  <div class="parallax-layer" id="parallax-photo" data-speed="0.15"></div>
+  <div class="parallax-layer parallax-ridge parallax-ridge-mid" data-speed="0.35"></div>
+  <div class="parallax-layer parallax-ridge parallax-ridge-near" data-speed="0.55"></div>
+  <div class="parallax-fade"></div>
+</div>
 
 <!-- 3D exploded-camera background -->
 <canvas id="camera-canvas"></canvas>
@@ -339,6 +346,7 @@
 
 <script type="module" src="js/cookies.js"></script>
 <script type="module" src="js/app.js"></script>
+<script type="module" src="js/parallax-bg.js"></script>
 <script type="module" src="js/scene.js"></script>
 </body>
 </html>

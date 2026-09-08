@@ -170,11 +170,12 @@ function buildFallbackCamera() {
     roughness: 0.3,
   });
 
-  // Compact, entry-level-mirrorless-style proportions (boxy, wider than
-  // tall, shallow body) rather than a chunky DSLR silhouette.
-  const halfW = 1.3;
+  // Proportions scaled to match the real Canon EOS R100's body dimensions
+  // (116.3 x 85.5 x 68.8mm, W x H x D) rather than an arbitrary DSLR-ish
+  // box — boxy, wider than tall, shallow depth.
   const halfH = 0.82;
-  const panelDepth = 1.5;
+  const halfW = halfH * (116.3 / 85.5);
+  const panelDepth = halfH * 2 * (68.8 / 85.5);
 
   // ---- Body: a rounded-edge chassis (4 panels + corner posts, open front
   // & back) so the parts normally hidden inside are visible once things

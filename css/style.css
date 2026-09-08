@@ -13,22 +13,74 @@ body {
   background-color: #0a0a0a;
 }
 
-/* Colourful mountain backdrop behind the hero (index.html only) — sits in
-   normal document flow (not fixed) so it scrolls away naturally past the
-   hero, like a parallax intro. Avoids background-attachment:fixed, which
-   has spotty compositing/repaint support once you scroll past it. */
-#bg-mountains {
+/* Multi-layer parallax backdrop behind the hero (index.html only). Sits in
+   normal document flow (not fixed) so the whole stack scrolls away past the
+   hero. Each .parallax-layer inside is transformed via js/parallax-bg.js at
+   its own speed (data-speed) as the page scrolls, so the real photo and the
+   two silhouette ridges drift apart — real depth, not one flat image. */
+#parallax-bg {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
+  overflow: hidden;
   z-index: 0;
-  background-image: url("../assets/img/mountains-bg.svg");
+  pointer-events: none;
+}
+
+.parallax-layer {
+  position: absolute;
+  top: -12%;
+  left: 0;
+  width: 100%;
+  height: 124%;
   background-size: cover;
   background-position: center bottom;
   background-repeat: no-repeat;
-  pointer-events: none;
+  will-change: transform;
+}
+
+/* Real CC0 photo — Wikimedia Commons, "Sunset in the mountains (Unsplash)",
+   public domain / CC0. Slowest layer, sits furthest back. */
+#parallax-photo {
+  background-image: url("../assets/img/mountains-photo.jpg");
+  filter: saturate(0.85) brightness(0.72);
+}
+
+/* Foreground ridge silhouettes — flat colour + clip-path, no separate image
+   request. Sit in front of the photo for parallax depth. */
+.parallax-ridge {
+  background-image: none;
+}
+.parallax-ridge-mid {
+  background-color: #1c1730;
+  clip-path: polygon(
+    0% 55%, 8% 42%, 18% 58%, 30% 38%, 42% 52%,
+    55% 35%, 68% 50%, 80% 40%, 92% 55%, 100% 45%,
+    100% 100%, 0% 100%
+  );
+}
+.parallax-ridge-near {
+  background-color: #100c1c;
+  clip-path: polygon(
+    0% 72%, 10% 57%, 22% 74%, 35% 52%, 48% 70%,
+    60% 50%, 74% 68%, 88% 54%, 100% 67%,
+    100% 100%, 0% 100%
+  );
+}
+
+/* Dark fade so hero text stays readable over the busy photo/silhouettes. */
+.parallax-fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 10, 10, 0.55) 0%,
+    rgba(10, 10, 10, 0.25) 35%,
+    rgba(10, 10, 10, 0.35) 60%,
+    rgba(10, 10, 10, 0.88) 100%
+  );
 }
 
 /* Fixed full-viewport canvas behind all content */
