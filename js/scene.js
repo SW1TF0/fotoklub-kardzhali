@@ -3,16 +3,19 @@
 // ----------------------------------------------------------------------------
 // Expects a glTF binary file at assets/models/camera.glb containing distinct
 // named meshes/groups for the camera parts, e.g.:
-//   Body, FrontPlate, Lens, Viewfinder, Flash, Mirror, Sensor, CircuitBoard, BackPlate
+//   Body, FrontPlate, Lens, Viewfinder, ModeDial, Flash, ShutterUnit, Sensor,
+//   CircuitBoard, BackPlate
 // (Any subset of these names is fine — anything not found simply keeps its
 // original position and isn't animated.)
 //
 // If the model fails to load (e.g. camera.glb hasn't been added to the repo
-// yet) a detailed stand-in camera built from primitives is used instead —
-// a rounded-edge chassis with a lens, viewfinder hump, flash, and the mirror
-// / sensor / circuit board it normally hides inside — so the scroll-explode
-// effect (parts separating + the rig spinning) is fully visible without the
-// real asset.
+// yet) a detailed stand-in camera built from primitives is used instead — a
+// stylized entry-level mirrorless body (compact chassis, EVF hump, mode
+// dial, RF-style lens mount, no reflex mirror) with the shutter unit,
+// sensor and circuit board it normally hides inside, so the scroll-explode
+// effect (parts separating + the rig spinning) is fully visible without a
+// real asset. It's an original stylized model, not a licensed reproduction
+// of any specific camera.
 // ============================================================================
 
 import * as THREE from "three";
@@ -23,7 +26,7 @@ gsap.registerPlugin(ScrollTrigger);
 const canvas = document.getElementById("camera-canvas");
 
 const scene = new THREE.Scene();
-scene.fog = new THREE.FogExp2(0x0a0a0a, 0.035);
+scene.fog = new THREE.FogExp2(0x1a1330, 0.035);
 
 const camera = new THREE.PerspectiveCamera(
   40,
@@ -70,10 +73,11 @@ const PART_CONFIG = {
   Lens: { axis: new THREE.Vector3(0, 0, 1), distance: 2.6 },
   FrontPlate: { axis: new THREE.Vector3(0, 0, 1), distance: 1.2 },
   Body: { axis: new THREE.Vector3(0, 0, 0), distance: 0 },
-  Viewfinder: { axis: new THREE.Vector3(0, 1, 0), distance: 1.4 },
+  Viewfinder: { axis: new THREE.Vector3(0, 1, 0), distance: 1.3 },
+  ModeDial: { axis: new THREE.Vector3(0.3, 1, 0), distance: 1.7 },
   Flash: { axis: new THREE.Vector3(0, 1, 0), distance: 2.1 },
-  Mirror: { axis: new THREE.Vector3(0, 1, 0.4), distance: 1.1 },
-  Sensor: { axis: new THREE.Vector3(0, 0, -1), distance: 1.2 },
+  ShutterUnit: { axis: new THREE.Vector3(0, 0.3, 1), distance: 0.9 },
+  Sensor: { axis: new THREE.Vector3(0, 0, -1), distance: 1.3 },
   CircuitBoard: { axis: new THREE.Vector3(0, 0, -1), distance: 2.0 },
   BackPlate: { axis: new THREE.Vector3(0, 0, -1), distance: 2.8 },
 };
@@ -101,15 +105,32 @@ function buildFallbackCamera() {
     metalness: 0.7,
     roughness: 0.35,
   });
+  const gripMat = new THREE.MeshStandardMaterial({
+    color: 0x111114,
+    metalness: 0.3,
+    roughness: 0.75,
+  });
   const darkMat = new THREE.MeshStandardMaterial({
     color: 0x0c0c10,
     metalness: 0.5,
     roughness: 0.45,
   });
+  const screenMat = new THREE.MeshStandardMaterial({
+    color: 0x0a1420,
+    metalness: 0.2,
+    roughness: 0.15,
+    emissive: 0x1a3a5c,
+    emissiveIntensity: 0.35,
+  });
   const accentMat = new THREE.MeshStandardMaterial({
     color: 0x3b82f6,
     metalness: 0.5,
     roughness: 0.3,
+  });
+  const redMat = new THREE.MeshStandardMaterial({
+    color: 0xcc3333,
+    metalness: 0.4,
+    roughness: 0.35,
   });
   const glassMat = new THREE.MeshStandardMaterial({
     color: 0x0a1420,
@@ -118,10 +139,10 @@ function buildFallbackCamera() {
     emissive: 0x3b82f6,
     emissiveIntensity: 0.1,
   });
-  const mirrorMat = new THREE.MeshStandardMaterial({
-    color: 0xd8d8dc,
-    metalness: 1,
-    roughness: 0.05,
+  const shutterMat = new THREE.MeshStandardMaterial({
+    color: 0xb8bcc4,
+    metalness: 0.95,
+    roughness: 0.15,
   });
   const sensorMat = new THREE.MeshStandardMaterial({
     color: 0x35405a,
@@ -143,29 +164,36 @@ function buildFallbackCamera() {
     metalness: 0.1,
     roughness: 0.5,
   });
+  const dialMat = new THREE.MeshStandardMaterial({
+    color: 0x2a2a30,
+    metalness: 0.85,
+    roughness: 0.3,
+  });
 
-  const halfW = 1.5;
-  const halfH = 0.8;
-  const panelDepth = 1.8;
+  // Compact, entry-level-mirrorless-style proportions (boxy, wider than
+  // tall, shallow body) rather than a chunky DSLR silhouette.
+  const halfW = 1.3;
+  const halfH = 0.82;
+  const panelDepth = 1.5;
 
   // ---- Body: a rounded-edge chassis (4 panels + corner posts, open front
   // & back) so the parts normally hidden inside are visible once things
   // separate. ----
   const body = new THREE.Group();
   body.name = "Body";
-  const top = new THREE.Mesh(new THREE.BoxGeometry(halfW * 2, 0.22, panelDepth), bodyMat);
+  const top = new THREE.Mesh(new THREE.BoxGeometry(halfW * 2, 0.2, panelDepth), bodyMat);
   top.position.set(0, halfH, 0);
-  const bottom = new THREE.Mesh(new THREE.BoxGeometry(halfW * 2, 0.22, panelDepth), bodyMat);
+  const bottom = new THREE.Mesh(new THREE.BoxGeometry(halfW * 2, 0.2, panelDepth), bodyMat);
   bottom.position.set(0, -halfH, 0);
-  const left = new THREE.Mesh(new THREE.BoxGeometry(0.22, halfH * 2, panelDepth), bodyMat);
+  const left = new THREE.Mesh(new THREE.BoxGeometry(0.2, halfH * 2, panelDepth), bodyMat);
   left.position.set(-halfW, 0, 0);
-  const right = new THREE.Mesh(new THREE.BoxGeometry(0.22, halfH * 2, panelDepth), bodyMat);
+  const right = new THREE.Mesh(new THREE.BoxGeometry(0.2, halfH * 2, panelDepth), bodyMat);
   right.position.set(halfW, 0, 0);
   body.add(top, bottom, left, right);
 
   // Rounded corner posts close the gaps left by the panel frame so it reads
   // as one solid, finished chassis rather than a flat skeleton.
-  const postGeo = new THREE.CylinderGeometry(0.11, 0.11, halfH * 2, 16);
+  const postGeo = new THREE.CylinderGeometry(0.1, 0.1, halfH * 2, 16);
   [
     [-halfW, panelDepth / 2],
     [-halfW, -panelDepth / 2],
@@ -177,102 +205,156 @@ function buildFallbackCamera() {
     body.add(post);
   });
 
-  // Rounded grip on the right side.
-  const grip = new THREE.Mesh(new THREE.CapsuleGeometry(0.24, 0.9, 6, 16), bodyMat);
-  grip.position.set(halfW + 0.12, -0.05, 0);
+  // Textured grip on the right side — a capsule core plus a few thin
+  // horizontal ridges to read as a rubberized handgrip up close.
+  const grip = new THREE.Mesh(new THREE.CapsuleGeometry(0.22, 0.85, 6, 16), gripMat);
+  grip.position.set(halfW + 0.12, -0.05, 0.05);
   body.add(grip);
+  for (let i = 0; i < 4; i++) {
+    const ridge = new THREE.Mesh(new THREE.TorusGeometry(0.23, 0.012, 6, 20), bodyMat);
+    ridge.rotation.y = Math.PI / 2;
+    ridge.position.set(halfW + 0.12, -0.35 + i * 0.22, 0.05);
+    body.add(ridge);
+  }
+
+  // Strap lugs — small rings on each shoulder.
+  [-1, 1].forEach((side) => {
+    const lug = new THREE.Mesh(new THREE.TorusGeometry(0.09, 0.025, 8, 16), dialMat);
+    lug.rotation.y = Math.PI / 2;
+    lug.position.set(side * (halfW + 0.02), halfH - 0.15, panelDepth / 2 - 0.15);
+    body.add(lug);
+  });
 
   group.add(body);
 
-  // ---- Front plate + shutter button + lens-mount ring (moves forward as
-  // one unit) ----
+  // ---- Front plate + shutter button + RF-style lens-mount ring (moves
+  // forward as one unit) ----
   const frontPlate = new THREE.Group();
   frontPlate.name = "FrontPlate";
-  const frontPanel = new THREE.Mesh(new THREE.BoxGeometry(halfW * 2 - 0.3, halfH * 2 - 0.15, 0.14), bodyMat);
-  const mountRing = new THREE.Mesh(new THREE.TorusGeometry(0.76, 0.035, 10, 40), accentMat);
+  const frontPanel = new THREE.Mesh(new THREE.BoxGeometry(halfW * 2 - 0.3, halfH * 2 - 0.15, 0.12), bodyMat);
+  const mountRing = new THREE.Mesh(new THREE.TorusGeometry(0.66, 0.05, 12, 40), dialMat);
   mountRing.position.set(0, 0, 0.08);
+  const mountDot = new THREE.Mesh(new THREE.SphereGeometry(0.045, 12, 12), redMat);
+  mountDot.position.set(0.66, 0, 0.1);
   const shutterBtn = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.09, 0.09, 0.08, 16),
+    new THREE.CylinderGeometry(0.08, 0.08, 0.07, 16),
     accentMat
   );
-  shutterBtn.position.set(1.0, 0.75, 0.1);
-  frontPlate.add(frontPanel, mountRing, shutterBtn);
-  frontPlate.position.set(0, 0, panelDepth / 2 + 0.07);
+  shutterBtn.position.set(0.95, 0.72, 0.09);
+  const grillDots = new THREE.Group();
+  for (let i = 0; i < 3; i++) {
+    const dot = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.03, 8), darkMat);
+    dot.position.set(-0.55, 0.55 - i * 0.12, 0.08);
+    grillDots.add(dot);
+  }
+  frontPlate.add(frontPanel, mountRing, mountDot, shutterBtn, grillDots);
+  frontPlate.position.set(0, 0, panelDepth / 2 + 0.06);
   group.add(frontPlate);
 
-  // ---- Lens: stepped barrel + front glass element (moves forward further) ----
+  // ---- Lens: RF-style barrel with a zoom ring (grooved), focus ring and
+  // front glass element (moves forward further) ----
   const lens = new THREE.Group();
   lens.name = "Lens";
-  const barrel = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.72, 0.78, 1.1, 48),
-    bodyMat
-  );
+  const barrel = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.66, 0.9, 48), bodyMat);
   barrel.rotation.x = Math.PI / 2;
-  const barrelTip = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.64, 0.72, 0.35, 48),
-    bodyMat
-  );
+  const zoomRing = new THREE.Mesh(new THREE.CylinderGeometry(0.63, 0.63, 0.28, 48), dialMat);
+  zoomRing.rotation.x = Math.PI / 2;
+  zoomRing.position.set(0, 0, 0.1);
+  // Grooves on the zoom ring for grip detail.
+  for (let i = 0; i < 16; i++) {
+    const angle = (i / 16) * Math.PI * 2;
+    const groove = new THREE.Mesh(new THREE.BoxGeometry(0.015, 0.26, 0.03), bodyMat);
+    groove.position.set(Math.cos(angle) * 0.635, Math.sin(angle) * 0.635, 0.1);
+    groove.rotation.z = angle;
+    zoomRing.add(groove);
+  }
+  const barrelTip = new THREE.Mesh(new THREE.CylinderGeometry(0.54, 0.6, 0.3, 48), bodyMat);
   barrelTip.rotation.x = Math.PI / 2;
-  barrelTip.position.set(0, 0, 0.68);
-  const ring = new THREE.Mesh(new THREE.TorusGeometry(0.72, 0.045, 12, 40), accentMat);
-  ring.position.set(0, 0, -0.4);
-  const glass = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.55, 0.06, 48), glassMat);
+  barrelTip.position.set(0, 0, 0.55);
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(0.6, 0.04, 12, 40), accentMat);
+  ring.position.set(0, 0, -0.34);
+  const glass = new THREE.Mesh(new THREE.CylinderGeometry(0.46, 0.46, 0.05, 48), glassMat);
   glass.rotation.x = Math.PI / 2;
-  glass.position.set(0, 0, 0.86);
-  lens.add(barrel, barrelTip, ring, glass);
-  lens.position.set(0, 0, panelDepth / 2 + 0.9);
+  glass.position.set(0, 0, 0.71);
+  lens.add(barrel, zoomRing, barrelTip, ring, glass);
+  lens.position.set(0, 0, panelDepth / 2 + 0.75);
   group.add(lens);
 
-  // ---- Viewfinder hump on top ----
-  const viewfinder = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.4, 0.9), bodyMat);
+  // ---- Electronic viewfinder hump (small + centered, mirrorless-style —
+  // not a bulky DSLR pentaprism) ----
+  const viewfinder = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.32, 0.7), bodyMat);
   viewfinder.name = "Viewfinder";
-  viewfinder.position.set(0, halfH + 0.2, 0.05);
+  viewfinder.position.set(0, halfH + 0.16, 0.1);
   group.add(viewfinder);
 
+  // ---- PASM mode dial ----
+  const modeDial = new THREE.Group();
+  modeDial.name = "ModeDial";
+  const dialBody = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.12, 24), dialMat);
+  modeDial.add(dialBody);
+  for (let i = 0; i < 10; i++) {
+    const angle = (i / 10) * Math.PI * 2;
+    const notch = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.05, 0.02), bodyMat);
+    notch.position.set(Math.cos(angle) * 0.22, 0.07, Math.sin(angle) * 0.22);
+    modeDial.add(notch);
+  }
+  modeDial.position.set(0.75, halfH + 0.08, -0.15);
+  group.add(modeDial);
+
   // ---- Pop-up flash ----
-  const flash = new THREE.Mesh(new THREE.BoxGeometry(0.68, 0.28, 0.55), flashMat);
+  const flash = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.24, 0.5), flashMat);
   flash.name = "Flash";
-  flash.position.set(0, halfH + 0.48, 0.1);
+  flash.position.set(0, halfH + 0.4, 0.15);
   group.add(flash);
 
-  // ---- Mirror (the part a DSLR normally hides) ----
-  const mirror = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.95, 0.05), mirrorMat);
-  mirror.name = "Mirror";
-  mirror.rotation.x = Math.PI / 4;
-  mirror.position.set(0, 0, 0.3);
-  group.add(mirror);
+  // ---- Shutter / IBIS unit — the thin mechanism a mirrorless body hides
+  // directly in front of the sensor (no reflex mirror here). ----
+  const shutterUnit = new THREE.Group();
+  shutterUnit.name = "ShutterUnit";
+  const shutterPlate = new THREE.Mesh(new THREE.BoxGeometry(1.5, 1.0, 0.06), shutterMat);
+  shutterUnit.add(shutterPlate);
+  const shutterBlades = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.85, 0.02), darkMat);
+  shutterBlades.position.set(0, 0, 0.04);
+  shutterUnit.add(shutterBlades);
+  shutterUnit.position.set(0, 0, 0.2);
+  group.add(shutterUnit);
 
-  // ---- Sensor plate ----
-  const sensor = new THREE.Mesh(new THREE.BoxGeometry(1.7, 1.1, 0.08), sensorMat);
+  // ---- Sensor plate (APS-C proportions) ----
+  const sensor = new THREE.Mesh(new THREE.BoxGeometry(1.5, 1.0, 0.07), sensorMat);
   sensor.name = "Sensor";
-  sensor.position.set(0, 0, -0.45);
+  sensor.position.set(0, 0, -0.35);
   group.add(sensor);
 
   // ---- Circuit board + a few component "chips" ----
   const circuitBoard = new THREE.Group();
   circuitBoard.name = "CircuitBoard";
-  const boardPlate = new THREE.Mesh(new THREE.BoxGeometry(1.9, 1.2, 0.06), pcbMat);
+  const boardPlate = new THREE.Mesh(new THREE.BoxGeometry(1.7, 1.1, 0.06), pcbMat);
   circuitBoard.add(boardPlate);
   const chipPositions = [
-    [-0.55, 0.28, 0.06],
-    [0.45, 0.18, 0.06],
-    [-0.2, -0.32, 0.06],
+    [-0.5, 0.26, 0.06],
+    [0.4, 0.16, 0.06],
+    [-0.15, -0.3, 0.06],
+    [0.55, -0.22, 0.06],
   ];
   chipPositions.forEach(([x, y, z], i) => {
     const chip = new THREE.Mesh(
-      new THREE.BoxGeometry(0.22, 0.16, 0.06),
+      new THREE.BoxGeometry(0.2, 0.14, 0.05),
       i === 1 ? accentMat : chipMat
     );
     chip.position.set(x, y, z);
     circuitBoard.add(chip);
   });
-  circuitBoard.position.set(0, 0, -0.78);
+  circuitBoard.position.set(0, 0, -0.68);
   group.add(circuitBoard);
 
-  // ---- Back plate (LCD side) ----
-  const backPlate = new THREE.Mesh(new THREE.BoxGeometry(halfW * 2 - 0.3, halfH * 2 - 0.15, 0.14), darkMat);
+  // ---- Back plate (rear LCD, subtly glowing to read as an active screen) ----
+  const backPlate = new THREE.Group();
   backPlate.name = "BackPlate";
-  backPlate.position.set(0, 0, -(panelDepth / 2 + 0.07));
+  const backPanel = new THREE.Mesh(new THREE.BoxGeometry(halfW * 2 - 0.3, halfH * 2 - 0.15, 0.1), darkMat);
+  const screen = new THREE.Mesh(new THREE.BoxGeometry(halfW * 2 - 0.55, halfH * 2 - 0.45, 0.02), screenMat);
+  screen.position.set(-0.08, 0.05, -0.06);
+  backPlate.add(backPanel, screen);
+  backPlate.position.set(0, 0, -(panelDepth / 2 + 0.06));
   group.add(backPlate);
 
   group.children.forEach((child) => registerPart(child, child.name));
