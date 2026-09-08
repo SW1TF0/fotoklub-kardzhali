@@ -1,10 +1,9 @@
 // ============================================================================
 // Firebase configuration
 // ----------------------------------------------------------------------------
-// Replace the values below with the config object from your own Firebase
-// project (Project settings -> General -> Your apps -> SDK setup and
-// configuration). This project uses the Firebase v10 modular SDK loaded
-// straight from the gstatic CDN, so no build step / npm install is required.
+// Project: fotoklub-kardzhali (console.firebase.google.com/project/fotoklub-kardzhali)
+// This project uses the Firebase v10 modular SDK loaded straight from the
+// gstatic CDN, so no build step / npm install is required.
 // ============================================================================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -15,17 +14,17 @@ import {
 import {
   getFirestore,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import {
-  getStorage,
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
+// Note: no Firebase Storage. New Firebase projects require the paid Blaze
+// plan to enable Cloud Storage, so photo uploads use plain image URLs
+// (pasted into the admin panel) instead — see js/admin.js and
+// firebase/storage.rules for details.
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID",
+  apiKey: "AIzaSyBpxnTYjefIq61LVdXOhr-qESk0eoh_Ly8",
+  authDomain: "fotoklub-kardzhali.firebaseapp.com",
+  projectId: "fotoklub-kardzhali",
+  messagingSenderId: "828843374669",
+  appId: "1:828843374669:web:01f37180d5d48b213d8404",
 };
 
 // ----------------------------------------------------------------------------
@@ -46,5 +45,4 @@ export const ADMIN_EMAILS = [
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-export const storage = getStorage(app);
 export const googleProvider = new GoogleAuthProvider();

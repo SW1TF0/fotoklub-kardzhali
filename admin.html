@@ -103,7 +103,12 @@
     <section data-panel="photos" class="space-y-8">
       <div>
         <h2 class="text-2xl font-bold">Снимки</h2>
-        <p class="text-sm text-neutral-400">Качвайте, редактирайте и изтривайте снимки от публичната галерия.</p>
+        <p class="text-sm text-neutral-400">
+          Добавяйте, редактирайте и изтривайте снимки от публичната галерия чрез връзка
+          (URL) към изображение — качете снимката в безплатна услуга по избор (напр.
+          <a href="https://imgur.com" target="_blank" rel="noopener" class="text-accent-400 hover:underline">imgur.com</a>)
+          и поставете връзката тук.
+        </p>
       </div>
 
       <form id="photo-form" class="grid gap-4 rounded-2xl border border-neutral-800 bg-neutral-900/60 p-6 sm:grid-cols-2">
@@ -113,12 +118,12 @@
           <input id="photo-title" name="title" type="text" placeholder="Напр. Залез над Кърджали" class="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-4 py-2.5 text-sm outline-none focus:border-accent-400 focus:ring-2 focus:ring-accent-400/40" />
         </div>
         <div class="sm:col-span-2">
-          <label for="photo-file" class="mb-1 block text-xs font-medium text-neutral-400">Файл с изображение</label>
-          <input id="photo-file" name="file" type="file" accept="image/*" required class="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-accent-400/40 file:mr-4 file:rounded-full file:border-0 file:bg-accent-400 file:px-4 file:py-1.5 file:text-neutral-950" />
+          <label for="photo-url" class="mb-1 block text-xs font-medium text-neutral-400">Връзка към изображението (URL)</label>
+          <input id="photo-url" name="url" type="url" placeholder="https://..." required class="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-4 py-2.5 text-sm outline-none focus:border-accent-400 focus:ring-2 focus:ring-accent-400/40" />
         </div>
         <p data-status class="text-sm text-accent-400 sm:col-span-2"></p>
         <div class="flex gap-3 sm:col-span-2">
-          <button id="photo-submit-btn" type="submit" class="rounded-full bg-accent-400 px-6 py-2.5 text-sm font-semibold text-neutral-950 hover:bg-accent-300 transition">Качи снимка</button>
+          <button id="photo-submit-btn" type="submit" class="rounded-full bg-accent-400 px-6 py-2.5 text-sm font-semibold text-neutral-950 hover:bg-accent-300 transition">Добави снимка</button>
           <button id="photo-cancel-edit" type="button" class="hidden rounded-full border border-neutral-700 px-6 py-2.5 text-sm hover:border-neutral-500">Отказ</button>
         </div>
       </form>
