@@ -3,7 +3,7 @@
 // and a read-only list of registered users.
 // ============================================================================
 
-import { auth, db, storage, ADMIN_EMAILS } from "./firebase-config.js";
+import { auth, db, ADMIN_EMAILS } from "./firebase-config.js";
 import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -20,12 +20,6 @@ import {
   orderBy,
   serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  deleteObject,
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 // ---- Auth guard --------------------------------------------------------------
 const loginScreen = document.getElementById("admin-login-screen");
@@ -115,7 +109,7 @@ function initModules() {
 function initPhotosModule() {
   const form = document.getElementById("photo-form");
   const listEl = document.getElementById("photos-list");
-  const fileInput = document.getElementById("photo-file");
+  const urlInput = document.getElementById("photo-url");
   const editIdInput = document.getElementById("photo-edit-id");
   const cancelEditBtn = document.getElementById("photo-cancel-edit");
   const submitBtn = document.getElementById("photo-submit-btn");
@@ -146,22 +140,16 @@ function initPhotosModule() {
         const docSnap = snap.docs.find((d) => d.id === btn.dataset.edit);
         const p = docSnap.data();
         form.title.value = p.title || "";
+        urlInput.value = p.url || "";
         editIdInput.value = docSnap.id;
         submitBtn.textContent = "Запази промените";
         cancelEditBtn.classList.remove("hidden");
-        fileInput.required = false;
+        window.scrollTo({ top: form.offsetTop - 100, behavior: "smooth" });
       });
     });
     listEl.querySelectorAll("[data-delete]").forEach((btn) => {
       btn.addEventListener("click", async () => {
         if (!confirm("Изтриване на снимката?")) return;
-        const docSnap = snap.docs.find((d) => d.id === btn.dataset.delete);
-        const p = docSnap.data();
-        try {
-          if (p.storagePath) await deleteObject(ref(storage, p.storagePath));
-        } catch (err) {
-          console.warn("Storage delete failed (may already be removed):", err);
-        }
         await deleteDoc(doc(db, "photos", btn.dataset.delete));
       });
     });
@@ -172,39 +160,25 @@ function initPhotosModule() {
   function resetPhotoForm() {
     form.reset();
     editIdInput.value = "";
-    submitBtn.textContent = "Качи снимка";
+    submitBtn.textContent = "Добави снимка";
     cancelEditBtn.classList.add("hidden");
-    fileInput.required = true;
   }
 
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const title = form.title.value.trim();
-    const file = fileInput.files[0];
+    const url = urlInput.value.trim();
     const editId = editIdInput.value;
     const statusEl = form.querySelector("[data-status]");
-    statusEl.textContent = "Качване...";
+    statusEl.textContent = "Запазване...";
 
     try {
       if (editId) {
-        const updates = { title };
-        if (file) {
-          const path = `photos/${Date.now()}_${file.name}`;
-          const storageRef = ref(storage, path);
-          await uploadBytes(storageRef, file);
-          updates.url = await getDownloadURL(storageRef);
-          updates.storagePath = path;
-        }
-        await updateDoc(doc(db, "photos", editId), updates);
+        await updateDoc(doc(db, "photos", editId), { title, url });
       } else {
-        const path = `photos/${Date.now()}_${file.name}`;
-        const storageRef = ref(storage, path);
-        await uploadBytes(storageRef, file);
-        const url = await getDownloadURL(storageRef);
         await addDoc(collection(db, "photos"), {
           title,
           url,
-          storagePath: path,
           createdAt: serverTimestamp(),
         });
       }
@@ -213,7 +187,7 @@ function initPhotosModule() {
       setTimeout(() => (statusEl.textContent = ""), 2000);
     } catch (err) {
       console.error(err);
-      statusEl.textContent = "Грешка при качването.";
+      statusEl.textContent = "Грешка при запазването.";
     }
   });
 }
